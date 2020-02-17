@@ -1,0 +1,55 @@
+{
+    "name": "appweb",
+    "description": "Embedthis Appweb Community Edition",
+    "title": "Embedthis Appweb Community Edition",
+    "version": "7.2.2",
+    "keywords": [
+        "appweb",
+        "http",
+        "webserver"
+    ],
+    "homepage": "https://www.embedthis.com/appweb/",
+    "author": {
+        "name": "Embedthis Software",
+        "email": "dev@embedthis.com",
+        "url": "https://www.embedthis.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/embedthis/appweb-gpl.git"
+    },
+    "bugs": {
+        "email": "dev@embedthis.com",
+        "url": "git://github.com/embedthis/appweb-gpl/issues"
+    },
+    "license": {
+        "type": "GPL",
+        "url": "http://www.gnu.org/licenses/gpl-2.0.html"
+    },
+    "dependencies": {
+        "assist": "~1",
+        "http": "~7",
+        "makerom": "~1",
+        "mpr": "~8",
+        "osdep": "~1",
+        "pcre": "~1",
+        "ssl": "~1",
+        "watchdog": "~1"
+    },
+    "optionalDependencies": {
+        "certs": "~1",
+        "esp": "~7",
+        "mpr-mbedtls": "~2",
+        "mpr-openssl": "~1",
+        "sqlite": "~3"
+    },
+    "devDependencies": {
+        "makeme": ">=1.0",
+        "pak": ">=1.0"
+    },
+    "files": [
+        "dist/",
+        "doc/api/"
+    ],
+    "import": true
+}
