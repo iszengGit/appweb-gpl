@@ -3,7 +3,7 @@
 
       <ItemDefinitionGroup>
         <ClCompile>
-          <PreprocessorDefinitions>ME_DEBUG=1;_FILE_OFFSET_BITS=64;MBEDTLS_USER_CONFIG_FILE="embedtls.h";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+          <PreprocessorDefinitions>ME_DEBUG=1;_FILE_OFFSET_BITS=64;_FILE_OFFSET_BITS=64;MBEDTLS_USER_CONFIG_FILE="embedtls.h";%(PreprocessorDefinitions)</PreprocessorDefinitions>
           <AdditionalIncludeDirectories>$(IncDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -14,7 +14,7 @@
       </ItemDefinitionGroup>
 
       <PropertyGroup Label="Globals">
-        <ProjectGuid>{53a6c412-c0dc-4619-ad6f-a1acd1d69860}</ProjectGuid>
+        <ProjectGuid>{0c793178-f07f-4f5d-abfa-e70dacaa8f49}</ProjectGuid>
         <RootNamespace />
         <Keyword>Win32Proj</Keyword>
       </PropertyGroup>
@@ -130,14 +130,14 @@ cd ..\..\projects\appweb-windows-default</Command>
 
     <ItemGroup>
       <ProjectReference Include="libhttp.vcxproj">
-      <Project>59f9bcb6-59d1-4952-8876-40d3ada2090b</Project>
+      <Project>2d6aeb19-bb26-4ad0-b9e0-40dbcb823834</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       </ProjectReference>
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="libmpr-version.vcxproj">
-      <Project>88f94e88-42a9-4a84-b1a2-a1b546e1a3b8</Project>
+      <Project>618417b8-86d9-4e5b-8c2c-e1a8acea1eb7</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       </ProjectReference>
     </ItemGroup>
