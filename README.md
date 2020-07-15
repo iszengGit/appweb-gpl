@@ -3,14 +3,14 @@ Embedthis Appweb Community Edition
 
 Appweb is a compact, fast and secure web server for embedded applications. It supports HTTP with a web server and HTTP client utility.
 
+This repository does not contain the Appweb Enterprise Edition source code, but it is the repository for issues and bug reports for both the Appweb Community and Enterprise editions. Contact dev@embedthis.com for access to the Enterprise Edition source code. 
+
 Branches
 ---
+The repository has several branches:
 
-The purpose of this repository is for evaluating the Appweb web server. This GPL licensed version is an
-earlier verion of the Appweb Enterprise Edition Web Server and does not have all the features or fixes
-of the Enterprise Edition.
-
-This version is suitable for evaluation and not for production use.
+* master - Most recent release of the software.
+* X.X - Archived prior release branches for maintenance.
 
 Licensing
 ---
@@ -125,5 +125,5 @@ Build with MakeMe and then:
 Resources
 ---
   - [Appweb web site](https://www.embedthis.com/)
-  - [Appweb GitHub repository](http://github.com/embedthis/appweb-gpl)
+  - [Appweb GitHub repository](http://github.com/embedthis/appweb)
   - [Embedthis web site](https://www.embedthis.com/)
