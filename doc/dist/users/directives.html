@@ -42,6 +42,8 @@
                     <a class="item" href="../start/releaseNotes.html">Release Notes</a>
                     <a class="item" href="../start/source.html">Building from Source</a>
                     <a class="item" href="../start/cgi.html">Building with CGI</a>
+                    <a class="item" href="../start/fast.html">Building with FastCGI</a>
+                    <a class="item" href="../start/proxy.html">Building with Proxy</a>
                     <a class="item" href="../start/openssl.html">Building with OpenSSL</a>
                     <a class="item" href="../start/php.html">Building with PHP</a>
                 </div>
@@ -79,7 +81,7 @@
                     <a class="item" href="../developers/action.html">Using the Action Handler</a>
                     <a class="item" href="../developers/stages.html">Creating Pipeline Stages</a>
                     <a class="item" href="../developers/rom.html">Serving Pages from ROM</a>
-                    <a class="item" href="../developers/migrating.html">Upgrading Earlier Releases</a>
+                    <a class="item" href="../developers/migrating.html">Migrating from Earlier Releases</a>
                 </div>
             </div>
             <div class="item">
@@ -96,29 +98,31 @@
             <div class="item">
                 <div class="menu">
                     <a class="header item" href="../users/samples.html">Samples</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/chroot-server">chroot-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/cpp-handler">cpp-handler</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/cpp-module">cpp-module</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/deploy-server">deploy-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/esp-hosted">esp-hosted</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/login-basic">login-basic</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/login-form">login-form</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/max-server">max-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/min-server">min-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/secure-server">secure-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/simple-action">simple-action</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/simple-client">simple-client</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/simple-handler">simple-handler</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/simple-module">simple-module</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/simple-server">simple-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/spy-filter">spy-filter</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/ssl-server">ssl-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/tiny-server">tiny-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/typical-client">typical-client</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/typical-server">typical-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/websockets-chat">websockets-chat</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/websockets-echo">websockets-echo</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/websockets-output">websockets-output</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/chroot-server">chroot-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/cpp-handler">cpp-handler</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/cpp-module">cpp-module</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/deploy-server">deploy-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/esp-hosted">esp-hosted</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/esp-upload">esp-upload</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-basic">login-basic</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-database">login-database</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-form">login-form</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/max-server">max-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/min-server">min-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/secure-server">secure-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-action">simple-action</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-client">simple-client</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-handler">simple-handler</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-module">simple-module</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-server">simple-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/spy-filter">spy-filter</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/ssl-server">ssl-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/tiny-server">tiny-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/typical-client">typical-client</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/typical-server">typical-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-chat">websockets-chat</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-echo">websockets-echo</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-output">websockets-output</a>
                 </div>
             </div>
             <div class="item">
@@ -126,11 +130,9 @@
                     <a class="header item" href="../developers/project.html">Project Resources</a>
                     <a class="item" href="https://embedthis.com/blog/categories/Appweb">Appweb News</a>
                     <a class="item" href="https://embedthis.com/appweb/">Appweb Web Site</a>
-                    <a class="item" href="https://github.com/embedthis/appweb">Source Code Repository</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/issues/389">Appweb Security Alerts</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/issues">Project Issue Database</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/releases">Change Log</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/milestones">Roadmap</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-gpl">Community Repository</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-gpl/issues/2">Appweb Security Alerts</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-gpl/issues">Project Issue Database</a>
                     <a class="item" href="https://embedthis.com/developers/contributors.html">Contributors Agreement</a>
                 </div>
             </div>
@@ -158,7 +160,7 @@
                     <a class="item" href="https://embedthis.com/appweb/">Appweb Site</a>
                     <span class="desktop-only">
                         <a class="item" href="https://embedthis.com/blog/categories/Appweb">Appweb News</a>
-                        <a class="item" href="https://github.com/embedthis/appweb">Repository</a>
+                        <a class="item" href="https://github.com/embedthis/appweb-gpl">Repository</a>
                         <a class="item" href="https://embedthis.com/blog/">Blog</a>
                         <a class="item" href="https://twitter.com/embedthat">Twitter</a>
                     </span>
@@ -196,7 +198,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><a href="dir/server.html#action">Action</a></td>
+                        <td><a href="dir/route.html#action">Action</a></td>
                         <td>CGI program to handle specific content.</td>
                     </tr>
                     <tr>
@@ -224,7 +226,7 @@
                         <td>Add a MIME type specification.</td>
                     </tr>
                     <tr>
-                        <td><a href="dir/server.html#alias">Alias</a></td>
+                        <td><a href="dir/route.html#alias">Alias</a></td>
                         <td>Map URLs to directories.</td>
                     </tr>
                     <tr>
@@ -308,7 +310,6 @@
                         <td><a href="dir/route.html#documents">Documents</a></td>
                         <td>Directory containing web content.</td>
                     </tr>
-
                     <tr>
                         <td><a href="dir/server.html#errorDocument">ErrorDocument</a></td>
                         <td>Define an error document to serve.</td>
@@ -325,12 +326,16 @@
                         <td>Define the timeout period to wait for requests to complete before exiting or restarting.</td>
                     </tr>
                     <tr>
-                        <td><a href="dir/route.html#header">Header</a></td>
-                        <td>Manage the response headers.</td>
+                        <td><a href="dir/route.html#fastConnect">FastConnect</a></td>
+                        <td>Configure FastCGI for the route.</td>
                     </tr>
                     <tr>
                         <td><a href="dir/server.html#groupAccount">GroupAccount</a></td>
                         <td>Define the O/S account group used by Appweb.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/route.html#header">Header</a></td>
+                        <td>Manage the response headers.</td>
                     </tr>
                     <tr>
                         <td><a href="dir/server.html#home">Home</a></td>
@@ -351,10 +356,6 @@
                     <tr>
                         <td><a href="dir/route.html#inactivityTimeout">InactivityTimeout</a></td>
                         <td>Maximum request and connection inactivity duration.</td>
-                    </tr>
-                    <tr>
-                        <td><a href="dir/sandbox.html#limitBuffer">LimitBuffer</a></td>
-                        <td>Set the maximum buffer size for pipeline stages.</td>
                     </tr>
                     <tr>
                         <td><a href="dir/sandbox.html#limitCache">LimitCache</a></td>
@@ -389,6 +390,10 @@
                         <td>Limit the total memory usage of Appweb. This is a hard limit.</td>
                     </tr>
                     <tr>
+                        <td><a href="dir/sandbox.html#limitPacket">LimitPacket</a></td>
+                        <td>Set the maximum packet size for pipeline queues and stages.</td>
+                    </tr>
+                    <tr>
                         <td><a href="dir/sandbox.html#limitProcesses">LimitProcesses</a></td>
                         <td>Maximum number of CGI processes to spawn.</td>
                     </tr>
@@ -419,6 +424,10 @@
                     <tr>
                         <td><a href="dir/sandbox.html#limitSessions">LimitSessions</a></td>
                         <td>Set the limit of simultaneous client sessions.</td>
+                    </tr>
+                    <tr>
+                        <td><a href="dir/sandbox.html#limitStreams">LimitStreams</a></td>
+                        <td>Set the limit of HTTP/2 streams per connection.</td>
                     </tr>
                     <tr>
                         <td><a href="dir/sandbox.html#limitUpload">LimitUpload</a></td>

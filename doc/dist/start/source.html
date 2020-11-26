@@ -42,6 +42,8 @@
                     <a class="item" href="../start/releaseNotes.html">Release Notes</a>
                     <a class="item" href="../start/source.html">Building from Source</a>
                     <a class="item" href="../start/cgi.html">Building with CGI</a>
+                    <a class="item" href="../start/fast.html">Building with FastCGI</a>
+                    <a class="item" href="../start/proxy.html">Building with Proxy</a>
                     <a class="item" href="../start/openssl.html">Building with OpenSSL</a>
                     <a class="item" href="../start/php.html">Building with PHP</a>
                 </div>
@@ -79,7 +81,7 @@
                     <a class="item" href="../developers/action.html">Using the Action Handler</a>
                     <a class="item" href="../developers/stages.html">Creating Pipeline Stages</a>
                     <a class="item" href="../developers/rom.html">Serving Pages from ROM</a>
-                    <a class="item" href="../developers/migrating.html">Upgrading Earlier Releases</a>
+                    <a class="item" href="../developers/migrating.html">Migrating from Earlier Releases</a>
                 </div>
             </div>
             <div class="item">
@@ -96,29 +98,31 @@
             <div class="item">
                 <div class="menu">
                     <a class="header item" href="../users/samples.html">Samples</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/chroot-server">chroot-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/cpp-handler">cpp-handler</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/cpp-module">cpp-module</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/deploy-server">deploy-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/esp-hosted">esp-hosted</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/login-basic">login-basic</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/login-form">login-form</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/max-server">max-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/min-server">min-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/secure-server">secure-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/simple-action">simple-action</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/simple-client">simple-client</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/simple-handler">simple-handler</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/simple-module">simple-module</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/simple-server">simple-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/spy-filter">spy-filter</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/ssl-server">ssl-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/tiny-server">tiny-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/typical-client">typical-client</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/typical-server">typical-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/websockets-chat">websockets-chat</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/websockets-echo">websockets-echo</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/websockets-output">websockets-output</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/chroot-server">chroot-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/cpp-handler">cpp-handler</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/cpp-module">cpp-module</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/deploy-server">deploy-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/esp-hosted">esp-hosted</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/esp-upload">esp-upload</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-basic">login-basic</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-database">login-database</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-form">login-form</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/max-server">max-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/min-server">min-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/secure-server">secure-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-action">simple-action</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-client">simple-client</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-handler">simple-handler</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-module">simple-module</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-server">simple-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/spy-filter">spy-filter</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/ssl-server">ssl-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/tiny-server">tiny-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/typical-client">typical-client</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/typical-server">typical-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-chat">websockets-chat</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-echo">websockets-echo</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-output">websockets-output</a>
                 </div>
             </div>
             <div class="item">
@@ -126,11 +130,9 @@
                     <a class="header item" href="../developers/project.html">Project Resources</a>
                     <a class="item" href="https://embedthis.com/blog/categories/Appweb">Appweb News</a>
                     <a class="item" href="https://embedthis.com/appweb/">Appweb Web Site</a>
-                    <a class="item" href="https://github.com/embedthis/appweb">Source Code Repository</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/issues/389">Appweb Security Alerts</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/issues">Project Issue Database</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/releases">Change Log</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/milestones">Roadmap</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-gpl">Community Repository</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-gpl/issues/2">Appweb Security Alerts</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-gpl/issues">Project Issue Database</a>
                     <a class="item" href="https://embedthis.com/developers/contributors.html">Contributors Agreement</a>
                 </div>
             </div>
@@ -158,7 +160,7 @@
                     <a class="item" href="https://embedthis.com/appweb/">Appweb Site</a>
                     <span class="desktop-only">
                         <a class="item" href="https://embedthis.com/blog/categories/Appweb">Appweb News</a>
-                        <a class="item" href="https://github.com/embedthis/appweb">Repository</a>
+                        <a class="item" href="https://github.com/embedthis/appweb-gpl">Repository</a>
                         <a class="item" href="https://embedthis.com/blog/">Blog</a>
                         <a class="item" href="https://twitter.com/embedthat">Twitter</a>
                     </span>
@@ -193,7 +195,7 @@
                 <li><b>Mac OS X</b> &mdash; Mac OS X 10.11 (Yosemite) or later</li>
             </ul>
 
-            <p>The source code has been designed to run on FreeBSD, Linux, Mac OS X, VxWorks and other operating systems. It has been tested under Fedora and Ubuntu Linux based on the Linux 3 Kernel, Microsoft Windows 7, 8 (32 and 64-bit), VxWorks 6.X and MAC OS X 10.11. </p>
+            <p>The source code has been designed to run on FreeBSD, Linux, Mac OS X, VxWorks and other operating systems. It has been tested under Fedora and Ubuntu Linux based on the Linux 3 Kernel, Microsoft Windows 7, 8 (32 and 64-bit), VxWorks 7.X and MAC OS X 10.11. </p>
 
             <h2>Accessing the Source Code</h2>
             <p>With each Appweb release, a complete source code snapshot is provided. You can download a source package from the Appweb web site or you can retrieve it from the Appweb GitHub repository. If you download from the repository, please use the <em>master</em> branch for the most recent stable snapshot. For less stable daily builds, use the <em>dev</em> branch.</p>
@@ -205,13 +207,7 @@
                 <i class="right long arrow icon"></i>GitHub Repository
             </a>
 
-            <h2>Installing Packages</h2>
-            <p>Appweb can be extended via extension third-party packages using the <a href="https://www.embedthis.com/pak/">Pak</a> utility. There are many packages including support for PHP, Angular and ESP skeletons.</p>
-
-            <p>Packages can be installed via simple Pak commands. For example:</p>
-            <pre class="ui code segment">pak install esp-angular-skeleton</pre>
-            <p>See the <a href="https://embedthis.com/pak/">Pak Web Site</a> to read about Pak and to
-            <a href="https://embedthis.com/pak/download.html">Download Pak</a>.</p>
+            
 
             <h2>Building Appweb from Source</h2>
             <p>The Appweb source distribution contains all the required source files, headers, and test framework to reconfigure, build, and verify Appweb. The software supports three methods for building from source.</p>
@@ -220,12 +216,13 @@
                 <li><a href="https://embedthis.com/makeme/">MakeMe</a></li>
                 <li>Visual Studio or Xcode</li>
             </ul>
-            <p>Building via <em>make</em> is the simplest way to build. Use <em>make</em> if you want a default build or if you need to integrate Appweb with an existing make-based build system. Build with <a href="https://embedthis.com/makeme/">MakeMe</a> if you want to customize or configure the software for your system, or if you need to cross-compile for another operating system or architecture. Use the Visual Studio or Xcode if you are most comfortable with these tools and want a default build.</p>
+            <p>Building via <em>make</em> is the simplest way to build. Use <em>make</em> if you want a default build or if you need to integrate Appweb with an existing make-based build system.</p>
+            <p>Build with <a href="https://embedthis.com/makeme/">MakeMe</a> if you want to customize or configure the software for your system, or if you need to cross-compile for another operating system or architecture. Use the Visual Studio or Xcode if you are most comfortable with these tools and want a default build.</p>
 
             <h2>Building</h2>
             <p>We use the <a href="https://embedthis.com/makeme/">MakeMe</a> tool internally to generate the Appweb Makefiles, MakeMe and IDE projects. This cool tool generates clean, efficient makefiles and projects. The MakeMe project documents how to use these generated Makefiles and projects as they are the same for all projects that use MakeMe. For full details, read on, courtesy of MakeMe:</p>
 
-            <p><a class="ui green large right labeled icon button" href="https://embedthis.com/makeme/doc/source/">
+            <p><a class="ui green large right labeled icon button" href="https://embedthis.com/makeme/doc/source/make.html">
                 <i class="right long arrow icon"></i>Building from Source
             </a></p>
 

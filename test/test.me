@@ -11,19 +11,26 @@ Me.load({
             generate: false,
         },
 
-        'test-prep': {
+        load: {
+            action: `run('testme --depth ' + me.settings.depth, {env: {TEST_LOAD: true}})`,
             platforms: [ 'local' ],
-            depends: [ 'clean-test', 'build', 'cgiProgram', 'prep-cgi', 'test-testScript', 'test-cgiProgram' ],
             generate: false,
         },
 
-
-        'cgiProgram': {
-            type:   'exe',
-            sources: [ 'cgiProgram.c' ],
-            ifdef: [ 'cgi' ],
-            action: true,
+        'test-prep': {
+            platforms: [ 'local' ],
+            depends: [ 'clean-test', 'build', 'prep-cgi', 'test-testScript', 'test-cgiProgram', 'test-fastProgram' ],
             generate: false,
+            action: `
+                print('   [Create] test files')
+                run('utils/make-files 205 web/10K.txt')
+                run('utils/make-files 512 web/25K.txt')
+                run('utils/make-files 2050 web/100K.txt')
+                run('utils/make-files 21000 web/1M.txt')
+                run('utils/make-files 1040000 web/50M.txt')
+                run('utils/make-files 4200000 web/200M.txt')
+                Path('.test-prepared').write('')
+            `,
         },
 
         'prep-cgi': {
@@ -62,11 +69,26 @@ Me.load({
                 cp(cgiProgram, Path('cgi-bin/nph-cgiProgram${EXE}'), perms)
                 cp(cgiProgram, Path('cgi-bin/cgi Program${EXE}'), perms)
                 cp(cgiProgram, Path('web/cgiProgram.cgi'), perms)
+                cp(cgiProgram, Path('web/upload/cgiProgram.cgi'), perms)
             `,
             depends: [ 'cgiProgram' ],
             generate: false,
             platforms: [ 'local' ],
             ifdef: [ 'cgi' ],
+        },
+
+        'test-fastProgram': {
+            path: 'fast-bin/fastProgram${EXE}',
+            action: `
+                let perms = { permissions: 0755 }
+                let fastProgram = me.dir.bin.join('fastProgram${EXE}')
+                cp(fastProgram, Path('fast-bin/fastProgram${EXE}'), perms)
+                cp(fastProgram, Path('fast-bin/fast Program${EXE}'), perms)
+            `,
+            depends: [ 'fastProgram' ],
+            generate: false,
+            platforms: [ 'local' ],
+            ifdef: [ 'fast' ],
         },
 
         'auth.conf': {
@@ -139,9 +161,10 @@ Me.load({
         },
 
         'clean-test': {
-            type: 'clean',                                                                                 
-            action: `                                                                                      
+            type: 'clean',
+            action: `
                 Cmd.run('testme --clean')
+                rm('.test-prepared')
                 rm('cache/*')
                 rm('app/cache/*')
                 rm('esp/*/cache/*')
@@ -149,6 +172,7 @@ Me.load({
                 rm('cgi-bin/cgi*')
                 rm('cgi-bin/nph*')
                 rm('cgi-bin/testScript*')
+                rm('fast-bin/fast*')
                 rm('web/js')
                 Path('cache').makeDir()
                 Path('cache/.keep').write()

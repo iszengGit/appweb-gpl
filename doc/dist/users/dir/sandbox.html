@@ -42,6 +42,8 @@
                     <a class="item" href="../../start/releaseNotes.html">Release Notes</a>
                     <a class="item" href="../../start/source.html">Building from Source</a>
                     <a class="item" href="../../start/cgi.html">Building with CGI</a>
+                    <a class="item" href="../../start/fast.html">Building with FastCGI</a>
+                    <a class="item" href="../../start/proxy.html">Building with Proxy</a>
                     <a class="item" href="../../start/openssl.html">Building with OpenSSL</a>
                     <a class="item" href="../../start/php.html">Building with PHP</a>
                 </div>
@@ -79,7 +81,7 @@
                     <a class="item" href="../../developers/action.html">Using the Action Handler</a>
                     <a class="item" href="../../developers/stages.html">Creating Pipeline Stages</a>
                     <a class="item" href="../../developers/rom.html">Serving Pages from ROM</a>
-                    <a class="item" href="../../developers/migrating.html">Upgrading Earlier Releases</a>
+                    <a class="item" href="../../developers/migrating.html">Migrating from Earlier Releases</a>
                 </div>
             </div>
             <div class="item">
@@ -96,29 +98,31 @@
             <div class="item">
                 <div class="menu">
                     <a class="header item" href="../../users/samples.html">Samples</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/chroot-server">chroot-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/cpp-handler">cpp-handler</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/cpp-module">cpp-module</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/deploy-server">deploy-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/esp-hosted">esp-hosted</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/login-basic">login-basic</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/login-form">login-form</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/max-server">max-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/min-server">min-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/secure-server">secure-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/simple-action">simple-action</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/simple-client">simple-client</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/simple-handler">simple-handler</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/simple-module">simple-module</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/simple-server">simple-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/spy-filter">spy-filter</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/ssl-server">ssl-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/tiny-server">tiny-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/typical-client">typical-client</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/typical-server">typical-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/websockets-chat">websockets-chat</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/websockets-echo">websockets-echo</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/websockets-output">websockets-output</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/chroot-server">chroot-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/cpp-handler">cpp-handler</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/cpp-module">cpp-module</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/deploy-server">deploy-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/esp-hosted">esp-hosted</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/esp-upload">esp-upload</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-basic">login-basic</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-database">login-database</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-form">login-form</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/max-server">max-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/min-server">min-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/secure-server">secure-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-action">simple-action</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-client">simple-client</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-handler">simple-handler</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-module">simple-module</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-server">simple-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/spy-filter">spy-filter</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/ssl-server">ssl-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/tiny-server">tiny-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/typical-client">typical-client</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/typical-server">typical-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-chat">websockets-chat</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-echo">websockets-echo</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-output">websockets-output</a>
                 </div>
             </div>
             <div class="item">
@@ -126,11 +130,9 @@
                     <a class="header item" href="../../developers/project.html">Project Resources</a>
                     <a class="item" href="https://embedthis.com/blog/categories/Appweb">Appweb News</a>
                     <a class="item" href="https://embedthis.com/appweb/">Appweb Web Site</a>
-                    <a class="item" href="https://github.com/embedthis/appweb">Source Code Repository</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/issues/389">Appweb Security Alerts</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/issues">Project Issue Database</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/releases">Change Log</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/milestones">Roadmap</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-gpl">Community Repository</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-gpl/issues/2">Appweb Security Alerts</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-gpl/issues">Project Issue Database</a>
                     <a class="item" href="https://embedthis.com/developers/contributors.html">Contributors Agreement</a>
                 </div>
             </div>
@@ -158,7 +160,7 @@
                     <a class="item" href="https://embedthis.com/appweb/">Appweb Site</a>
                     <span class="desktop-only">
                         <a class="item" href="https://embedthis.com/blog/categories/Appweb">Appweb News</a>
-                        <a class="item" href="https://github.com/embedthis/appweb">Repository</a>
+                        <a class="item" href="https://github.com/embedthis/appweb-gpl">Repository</a>
                         <a class="item" href="https://embedthis.com/blog/">Blog</a>
                         <a class="item" href="https://twitter.com/embedthat">Twitter</a>
                     </span>
@@ -220,40 +222,6 @@
                         <td>
                             <p>This directive defines the maximum time to wait for existing requests to complete
                             before exiting or restarting Appweb. </p>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <a id="limitBuffer"></a>
-            <h2>LimitBuffer</h2>
-            <table class="directive" title="directive">
-                <tbody>
-                    <tr>
-                        <td class="pivot">Description</td>
-                        <td>Defines the pipeline stage buffer size</td>
-                    </tr>
-                    <tr>
-                        <td class="pivot">Synopsis</td>
-                        <td>LimitBuffer size</td>
-                    </tr>
-                    <tr>
-                        <td class="pivot">Context</td>
-                        <td>Default server, VirtualHost</td>
-                    </tr>
-                    <tr>
-                        <td class="pivot">Example</td>
-                        <td>LimitBuffer 8192</td>
-                    </tr>
-                    <tr>
-                        <td class="pivot">Notes</td>
-                        <td>
-                            <p>This directive defines the maximum buffer size in bytes for each stage in the request
-                            pipeline. This directive places a limit on the amount of memory consumed by pipeline stages.
-                            <p>NOTE: this does not imply a maximum response size (See LimitResponseBody for that
-                            functionality). It merely limits the memory consumed when trying to buffer the response data.
-                            Appweb handlers will flush the buffers and use HTTP/1.1 chunked output if the amount of
-                            response data exceeds the output buffer size.</p>
                         </td>
                     </tr>
                 </tbody>
@@ -519,6 +487,38 @@
                             the MPR memory allocation primitives.
                             If the memory limit is exceeded, Appweb will invoke the policy specified by the
                             MemoryPolicy directive.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <a id="limitPacket"></a>
+            <h2>LimitPacket</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Defines the pipeline stage buffer size</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>LimitPacket size</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server, VirtualHost</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>LimitPacket 16K</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>This directive defines the maximum packet size in bytes for each stage in the request pipeline. This directive places a limit on the amount of memory consumed by pipeline stages.
+                            <p>NOTE: this does not imply a maximum response size (See LimitResponseBody for that functionality). It merely limits the memory consumed when trying to process the response data. Appweb handlers will flush the packets and use HTTP/1.1 chunked output if the amount of response data exceeds the output packet size.</p>
+                            <p>If using HTTP/2, the packet size will never be less than 16K which is the minimum frame size supported by HTTP/2.</p>
+                            <p>This directive was called "LimitBuffer" in earlier versions.</p>
                         </td>
                     </tr>
                 </tbody>
@@ -835,6 +835,35 @@
                 </tbody>
             </table>
 
+            <a id="limitStreams"></a>
+            <h2>LimitStreams</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Sets the maximum number of HTTP/2 streams per client connection. </td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>LimitStreams count</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Default server, VirtualHost, Route</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>LimitStreams 20</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>The LimitStreams directive defines the maximum number of simultaneous HTTP/2 streams per client connection for HTTP/2. The default limit is 20.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
             <a id="limitUri"></a>
             <h2>LimitUri</h2>
             <table class="directive" title="directive">
@@ -931,7 +960,7 @@
                     </tr>
                     <tr>
                         <td class="pivot">Synopsis</td>
-                        <td>MemoryPolicy continue|restart</td>
+                        <td>MemoryPolicy continue|restart|abort</td>
                     </tr>
                     <tr>
                         <td class="pivot">Context</td>
@@ -962,6 +991,8 @@
                             A graceful restart will allow existing requests to complete up to the timeout specified by
                             the ExitTimeout directive. Appweb relies on the <em>appman</em> manager application to restart
                             appweb in this case.</p>
+                            <p>If the memory policy is set to <em>abort</em>, Appweb will abort and dump core. Ensure you set the
+                            system ulimit core value correctly so that core dumps are generated by the system.</p>
                         </td>
                     </tr>
                 </tbody>
@@ -991,15 +1022,9 @@
                     <tr>
                         <td class="pivot">Notes</td>
                         <td>
-                            <p>The MinWorkers directive will pre-allocate the specified number of worker threads on startup
-                            and then ensure that the worker pool always has at least this minimum number of workers.</p>
-                            <p>Appweb will automatically adjust the number of workers between the minimum specified
-                            by this directive and the maximum specified by the WorkerLimit directive or via the Appweb
-                            command line. Every ten minutes, Appweb will prune workers that have been idle for five
-                            minutes to reduce resource consumption.</p>
-                            <p>Appweb 4 has two non-worker threads: one for the master event loop and one for the
-                            garbage collector. So the total number of Appweb threads will be two plus the number of
-                            active workers.</p>
+                            <p>The MinWorkers directive will pre-allocate the specified number of worker threads on startup and then ensure that the worker pool always has at least this minimum number of workers.</p>
+                            <p>Appweb will automatically adjust the number of workers between the minimum specified by this directive and the maximum specified by the WorkerLimit directive or via the Appweb command line. Every ten minutes, Appweb will prune workers that have been idle for five minutes to reduce resource consumption.</p>
+                            <p>Appweb has two non-worker threads: one for the master event loop and one for the garbage collector. So the total number of Appweb threads will be two plus the number of active workers.</p>
                         </td>
                     </tr>
                 </tbody>

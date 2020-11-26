@@ -42,6 +42,8 @@
                     <a class="item" href="../start/releaseNotes.html">Release Notes</a>
                     <a class="item" href="../start/source.html">Building from Source</a>
                     <a class="item" href="../start/cgi.html">Building with CGI</a>
+                    <a class="item" href="../start/fast.html">Building with FastCGI</a>
+                    <a class="item" href="../start/proxy.html">Building with Proxy</a>
                     <a class="item" href="../start/openssl.html">Building with OpenSSL</a>
                     <a class="item" href="../start/php.html">Building with PHP</a>
                 </div>
@@ -79,7 +81,7 @@
                     <a class="item" href="../developers/action.html">Using the Action Handler</a>
                     <a class="item" href="../developers/stages.html">Creating Pipeline Stages</a>
                     <a class="item" href="../developers/rom.html">Serving Pages from ROM</a>
-                    <a class="item" href="../developers/migrating.html">Upgrading Earlier Releases</a>
+                    <a class="item" href="../developers/migrating.html">Migrating from Earlier Releases</a>
                 </div>
             </div>
             <div class="item">
@@ -96,29 +98,31 @@
             <div class="item">
                 <div class="menu">
                     <a class="header item" href="../users/samples.html">Samples</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/chroot-server">chroot-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/cpp-handler">cpp-handler</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/cpp-module">cpp-module</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/deploy-server">deploy-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/esp-hosted">esp-hosted</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/login-basic">login-basic</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/login-form">login-form</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/max-server">max-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/min-server">min-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/secure-server">secure-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/simple-action">simple-action</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/simple-client">simple-client</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/simple-handler">simple-handler</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/simple-module">simple-module</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/simple-server">simple-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/spy-filter">spy-filter</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/ssl-server">ssl-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/tiny-server">tiny-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/typical-client">typical-client</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/typical-server">typical-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/websockets-chat">websockets-chat</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/websockets-echo">websockets-echo</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/websockets-output">websockets-output</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/chroot-server">chroot-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/cpp-handler">cpp-handler</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/cpp-module">cpp-module</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/deploy-server">deploy-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/esp-hosted">esp-hosted</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/esp-upload">esp-upload</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-basic">login-basic</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-database">login-database</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-form">login-form</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/max-server">max-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/min-server">min-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/secure-server">secure-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-action">simple-action</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-client">simple-client</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-handler">simple-handler</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-module">simple-module</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-server">simple-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/spy-filter">spy-filter</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/ssl-server">ssl-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/tiny-server">tiny-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/typical-client">typical-client</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/typical-server">typical-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-chat">websockets-chat</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-echo">websockets-echo</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-output">websockets-output</a>
                 </div>
             </div>
             <div class="item">
@@ -126,11 +130,9 @@
                     <a class="header item" href="../developers/project.html">Project Resources</a>
                     <a class="item" href="https://embedthis.com/blog/categories/Appweb">Appweb News</a>
                     <a class="item" href="https://embedthis.com/appweb/">Appweb Web Site</a>
-                    <a class="item" href="https://github.com/embedthis/appweb">Source Code Repository</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/issues/389">Appweb Security Alerts</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/issues">Project Issue Database</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/releases">Change Log</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/milestones">Roadmap</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-gpl">Community Repository</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-gpl/issues/2">Appweb Security Alerts</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-gpl/issues">Project Issue Database</a>
                     <a class="item" href="https://embedthis.com/developers/contributors.html">Contributors Agreement</a>
                 </div>
             </div>
@@ -158,7 +160,7 @@
                     <a class="item" href="https://embedthis.com/appweb/">Appweb Site</a>
                     <span class="desktop-only">
                         <a class="item" href="https://embedthis.com/blog/categories/Appweb">Appweb News</a>
-                        <a class="item" href="https://github.com/embedthis/appweb">Repository</a>
+                        <a class="item" href="https://github.com/embedthis/appweb-gpl">Repository</a>
                         <a class="item" href="https://embedthis.com/blog/">Blog</a>
                         <a class="item" href="https://twitter.com/embedthat">Twitter</a>
                     </span>
@@ -178,16 +180,20 @@
     <div class="content">
 
 
-            <h1>Licensing</h1>
-            <p>Appweb is licensed under two separate licenses. You may use either, provide you fully comply with the
-                governing terms.</p>
+            <h1>Appweb Licensing</h1>
+
+            <p>Appweb is published in two editions with different licenses:</p>
             <ul>
-                <li><a href="https://embedthis.com/appweb/licensing.html">Appweb Commercial License</a>.</li>
-                <li><a href="gpl.html">GNU GPL</a> Open Source license.</li>
+                <li>Embedthis Appweb Enterprise Edition</li>
+                <li>Embedthis Appweb Community Edition</li>
             </ul>
 
-            <h2>Appweb Commercial License</h2>
-            <p>The Appweb commercial license is a royalty-free license that provides you with the following benefits:</p>
+            <p>The Enterprise edition is a royalty free, commercially licensed edition with options for commercial maintenance and support. Contact <a href="mailto:dev@embedthis.com">sales@embedthis.com</a> for details.
+            The Community edition is an open source licensed edition of Appweb provided under the GPL license.
+            You may use either, provide you fully comply with the governing terms.</p>
+
+            <h2>Appweb Enterprise Edition</h2>
+            <p>Appweb Enterprise Edition is an edition of Appweb published with a commercial license and royalty-free deployment benefits, including:</p>
             <ul>
                 <li>The right to develop and modify the software to embed in your products</li>
                 <li>The ability to redistribute your products with the software</li>
@@ -196,39 +202,36 @@
                 <li>Software maintenance for updates, upgrades and security patches</li>
                 <li>Priority software support services</li>
             </ul>
-                
-            <p>If you require a commercial license or commercial support for Appweb, please contact us at:
+
+            <p>Please read <a href="https://embedthis.com/appweb/licensing.html">Appweb Commercial License</a> for more details.
+            If you require a commercial license or commercial support for Appweb, please contact us at:
             <a href="mailto:licensing@embedthis.com">licensing@embedthis.com</a>.</p>
 
-            <h2>Open Source License</h2>
-            <p>Appweb my be used with the <a href="gpl.html">GPL Open Source license</a>. This is ideal for evaluating
-            Appweb, for internal use, stand-alone use, or for integrating exclusively with other GPL software.
-            If you intend to distribute your software and link Appweb with your application, the GPL requires you 
-            to provide public and full access to all source code and documentation on a nondiscriminatory basis.
-            If you do not wish to provide source code to your application, you must purchase a commercial license.</p>
-            
+            <h2>Appweb Community Edition</h2>
+            <p>The Appweb Community Edition is limited feature, an open source edition of Appweb governed by the <a href="gpl.html">GPL Open Source license</a>. This edition is ideal for evaluating Appweb, for internal use, stand-alone use, or for integrating exclusively with other GPL software. </p>
+
+            <p>If you deploy products based on the Appweb Community Edition you must offer your source code that links with Appweb to the general public and anyone who requests it. If you choose the GPL license, Embedthis hereby requests a copy of your source code that is used in combination with Appweb. Please provide a copy of your source code by contacting <a href="mailto:licensing@embedthis.com">licensing@embedthis.com</a>.</p>
+
+            <p>Please read the <a href="gpl.html">GNU GPL</a> Open Source license for full details.</p>
+
             <h3>Evaluating Appweb</h3>
-            <p>If you are evaluating Appweb internally, and not distributing any products containing Appweb, then you may
-            be able to use the GPL license for this evaluation. Once complete, you may purchase a commercial license so 
-            that you can distribute your product. You may evaluate, develop, modify, and embed Appweb in your
-            application or product provided it is not distributed. You may copy and modify the source code provided 
-            all copies fall under the GPL license.</p>
+            <p>If you are evaluating Appweb internally, and not distributing any products containing Appweb, then the Appweb Community Edition is ideal. You may evaluate, develop, modify, and embed Appweb Community Edition in your application or product, provided it is not distributed. You may copy and modify the source code, provided all copies fall under the GPL license. Once your evaluation is complete, you may purchase the Enterprise Edition so that you can distribute your product under a commercial license.</p>
 
             <h3>Stand Alone Use</h3>
-            <p>If you are using Appweb in a stand-alone manner as free-standing binaries, and are not integrating the
-            Appweb source code or libraries with your software to create a derivative work, then the GPL license may
-            be sufficient. Stand-alone use does not permit linking Appweb using either static or dynamic linking.</p>
+            <p>If you are wanting to use Appweb in a stand-alone manner as free-standing binaries, and are not integrating the
+            Appweb source code or libraries with your software to create a derivative work, then the Community Edition license may
+            be sufficient. Stand-alone use does not permit linking Appweb using either static or dynamic linking or creating a derivative work of Appweb.</p>
 
             <h3>Use with Other GPL Software</h3>
-            <p>If you are integrating Appweb source or libraries into your application and your software is also 
+            <p>If you are integrating Appweb Community Edition into your application and your software is also
             fully licensed under the GPL license, you may use Appweb with the GPL  license and embed Appweb
             in your applications or devices. You do not need any other agreement or license &mdash; the GPL is all you
             require.</p>
 
             <h3>Embedding with Non-GPL Software</h3>
-            <p>If Appweb is embedded into your application, or your application is linked using static or dynamic
+            <p>If you wish to embed Appweb into your application, or your application is linked using static or dynamic
             linking with libraries containing any Appweb source code and you do not wish to publish your source code
-            under the GPL, then you will need the Appweb Commercial license.</p>
+            under the GPL, then you will need to use Appweb Enterprise Edition.</p>
 
             <p>Please contact <a href="mailto:licensing@embedthis.com">licensing@embedthis.com</a> if you have any
             questions about licensing Appweb.</p>

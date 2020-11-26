@@ -26,6 +26,11 @@ function run(args): String {
             }
         }
         ttrue(cmd.status == 0) 
+        if (cmd.status != 0) {
+            // print("CMD", args)
+            // print("RESP", cmd.response)
+            throw new Error('Bad command status')
+        }
         return cmd.response
     } catch (e) {
         tverbose("CATCH", e)
@@ -44,7 +49,7 @@ ttrue(data.startsWith("012345678"))
 ttrue(data.trimEnd().endsWith("END"))
 
 //  Chunked get
-data = run("--chunk 256 /big.txt")
+data = run("--chunk 10240 /100K.txt")
 if (!data.startsWith("012345678")) {
     print("DATA", data)
 }
@@ -130,7 +135,7 @@ ttrue(run("--range -5 /numbers.html").trim() == "5678")
 //  Load test
 if (tdepth() > 2) {
     run("-i 2000 /index.html")
-    run("-i 2000 /big.txt")
+    run("-i 2000 /100K.txt")
 }
 //  Cleanup
 for each (f in Path("../web/tmp").files()) {

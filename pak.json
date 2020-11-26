@@ -2,12 +2,12 @@
     "name": "appweb",
     "description": "Embedthis Appweb Community Edition",
     "title": "Embedthis Appweb Community Edition",
-    "version": "7.2.3",
     "keywords": [
         "appweb",
         "http",
         "webserver"
     ],
+    "version": "8.2.1",
     "homepage": "https://www.embedthis.com/appweb/",
     "author": {
         "name": "Embedthis Software",
@@ -28,9 +28,12 @@
     },
     "dependencies": {
         "assist": "~1",
-        "http": "~7",
+        "http": "~9",
         "makerom": "~1",
-        "mpr": "~8",
+        "mbedtls": "~2.8",
+        "me-win": "~1",
+        "mpr": "~9",
+        "mpr-version": "~1",
         "osdep": "~1",
         "pcre": "~1",
         "ssl": "~1",
@@ -38,7 +41,7 @@
     },
     "optionalDependencies": {
         "certs": "~1",
-        "esp": "~7",
+        "esp": "~9",
         "mpr-mbedtls": "~2",
         "mpr-openssl": "~1",
         "sqlite": "~3"

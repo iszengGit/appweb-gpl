@@ -125,5 +125,5 @@ Build with MakeMe and then:
 Resources
 ---
   - [Appweb web site](https://www.embedthis.com/)
-  - [Appweb GitLab repository](http://gitlab.com/embedthis/appweb-ee)
+  - [Appweb GitLab repository](http://gitlab.com/embedthis/appweb)
   - [Embedthis web site](https://www.embedthis.com/)

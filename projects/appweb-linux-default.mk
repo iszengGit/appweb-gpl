@@ -3,7 +3,7 @@
 #
 
 NAME                  := appweb
-VERSION               := 7.2.3
+VERSION               := 8.2.1
 PROFILE               ?= default
 ARCH                  ?= $(shell uname -m | sed 's/i.86/x86/;s/x86_64/x64/;s/arm.*/arm/;s/mips.*/mips/')
 CC_ARCH               ?= $(shell echo $(ARCH) | sed 's/x86/i686/;s/x64/x86_64/')
@@ -20,6 +20,7 @@ ME_COM_COMPILER       ?= 1
 ME_COM_DIR            ?= 0
 ME_COM_EJS            ?= 0
 ME_COM_ESP            ?= 1
+ME_COM_FAST           ?= 0
 ME_COM_HTTP           ?= 1
 ME_COM_LIB            ?= 1
 ME_COM_MATRIXSSL      ?= 0
@@ -31,6 +32,8 @@ ME_COM_OPENSSL        ?= 0
 ME_COM_OSDEP          ?= 1
 ME_COM_PCRE           ?= 1
 ME_COM_PHP            ?= 0
+ME_COM_PROXY          ?= 0
+ME_COM_SQLITE         ?= 0
 ME_COM_SSL            ?= 1
 ME_COM_VXWORKS        ?= 0
 ME_COM_WATCHDOG       ?= 1
@@ -47,7 +50,7 @@ ifeq ($(ME_COM_ESP),1)
 endif
 
 CFLAGS                += -fPIC -fstack-protector --param=ssp-buffer-size=4 -Wformat -Wformat-security -Wl,-z,relro,-z,now -Wl,--as-needed -Wl,--no-copy-dt-needed-entries -Wl,-z,noexecstatck -Wl,-z,noexecheap -w
-DFLAGS                += -D_REENTRANT -DPIC $(patsubst %,-D%,$(filter ME_%,$(MAKEFLAGS))) -DME_COM_CGI=$(ME_COM_CGI) -DME_COM_COMPILER=$(ME_COM_COMPILER) -DME_COM_DIR=$(ME_COM_DIR) -DME_COM_EJS=$(ME_COM_EJS) -DME_COM_ESP=$(ME_COM_ESP) -DME_COM_HTTP=$(ME_COM_HTTP) -DME_COM_LIB=$(ME_COM_LIB) -DME_COM_MATRIXSSL=$(ME_COM_MATRIXSSL) -DME_COM_MBEDTLS=$(ME_COM_MBEDTLS) -DME_COM_MDB=$(ME_COM_MDB) -DME_COM_MPR=$(ME_COM_MPR) -DME_COM_NANOSSL=$(ME_COM_NANOSSL) -DME_COM_OPENSSL=$(ME_COM_OPENSSL) -DME_COM_OSDEP=$(ME_COM_OSDEP) -DME_COM_PCRE=$(ME_COM_PCRE) -DME_COM_PHP=$(ME_COM_PHP) -DME_COM_SSL=$(ME_COM_SSL) -DME_COM_VXWORKS=$(ME_COM_VXWORKS) -DME_COM_WATCHDOG=$(ME_COM_WATCHDOG) 
+DFLAGS                += -D_REENTRANT -DPIC $(patsubst %,-D%,$(filter ME_%,$(MAKEFLAGS))) -DME_COM_CGI=$(ME_COM_CGI) -DME_COM_COMPILER=$(ME_COM_COMPILER) -DME_COM_DIR=$(ME_COM_DIR) -DME_COM_EJS=$(ME_COM_EJS) -DME_COM_ESP=$(ME_COM_ESP) -DME_COM_FAST=$(ME_COM_FAST) -DME_COM_HTTP=$(ME_COM_HTTP) -DME_COM_LIB=$(ME_COM_LIB) -DME_COM_MATRIXSSL=$(ME_COM_MATRIXSSL) -DME_COM_MBEDTLS=$(ME_COM_MBEDTLS) -DME_COM_MDB=$(ME_COM_MDB) -DME_COM_MPR=$(ME_COM_MPR) -DME_COM_NANOSSL=$(ME_COM_NANOSSL) -DME_COM_OPENSSL=$(ME_COM_OPENSSL) -DME_COM_OSDEP=$(ME_COM_OSDEP) -DME_COM_PCRE=$(ME_COM_PCRE) -DME_COM_PHP=$(ME_COM_PHP) -DME_COM_PROXY=$(ME_COM_PROXY) -DME_COM_SQLITE=$(ME_COM_SQLITE) -DME_COM_SSL=$(ME_COM_SSL) -DME_COM_VXWORKS=$(ME_COM_VXWORKS) -DME_COM_WATCHDOG=$(ME_COM_WATCHDOG) 
 IFLAGS                += "-I$(BUILD)/inc"
 LDFLAGS               += '-rdynamic' '-Wl,--enable-new-dtags' '-Wl,-rpath,$$ORIGIN/'
 LIBPATHS              += -L$(BUILD)/bin
@@ -98,6 +101,7 @@ ifeq ($(ME_COM_HTTP),1)
 endif
 TARGETS               += $(BUILD)/.install-certs-modified
 TARGETS               += $(BUILD)/bin/makerom
+TARGETS               += $(BUILD)/bin/server
 TARGETS               += src/server/cache
 TARGETS               += $(BUILD)/bin/appman
 
@@ -140,6 +144,7 @@ clean:
 	rm -f "$(BUILD)/obj/esp.o"
 	rm -f "$(BUILD)/obj/espHandler.o"
 	rm -f "$(BUILD)/obj/espLib.o"
+	rm -f "$(BUILD)/obj/fastProgram.o"
 	rm -f "$(BUILD)/obj/http.o"
 	rm -f "$(BUILD)/obj/httpLib.o"
 	rm -f "$(BUILD)/obj/makerom.o"
@@ -149,6 +154,7 @@ clean:
 	rm -f "$(BUILD)/obj/mprLib.o"
 	rm -f "$(BUILD)/obj/pcre.o"
 	rm -f "$(BUILD)/obj/rom.o"
+	rm -f "$(BUILD)/obj/server.o"
 	rm -f "$(BUILD)/obj/watchdog.o"
 	rm -f "$(BUILD)/bin/appweb"
 	rm -f "$(BUILD)/bin/authpass"
@@ -165,6 +171,7 @@ clean:
 	rm -f "$(BUILD)/bin/libmpr-version.a"
 	rm -f "$(BUILD)/bin/libpcre.so"
 	rm -f "$(BUILD)/bin/makerom"
+	rm -f "$(BUILD)/bin/server"
 	rm -f "$(BUILD)/bin/appman"
 
 clobber: clean
@@ -288,29 +295,22 @@ $(BUILD)/inc/pcre.h: $(DEPS_11)
 	cp src/pcre/pcre.h $(BUILD)/inc/pcre.h
 
 #
-#   server.c
-#
-
-src/server/cache/server.c: $(DEPS_12)
-
-#
 #   appweb.o
 #
-DEPS_13 += $(BUILD)/inc/appweb.h
-DEPS_13 += src/server/cache/server.c
+DEPS_12 += $(BUILD)/inc/appweb.h
 
 $(BUILD)/obj/appweb.o: \
-    src/server/appweb.c $(DEPS_13)
+    src/server/appweb.c $(DEPS_12)
 	@echo '   [Compile] $(BUILD)/obj/appweb.o'
 	$(CC) -c -o $(BUILD)/obj/appweb.o $(CFLAGS) $(DFLAGS) -D_FILE_OFFSET_BITS=64 -D_FILE_OFFSET_BITS=64 -DMBEDTLS_USER_CONFIG_FILE=\"embedtls.h\" $(IFLAGS) src/server/appweb.c
 
 #
 #   authpass.o
 #
-DEPS_14 += $(BUILD)/inc/appweb.h
+DEPS_13 += $(BUILD)/inc/appweb.h
 
 $(BUILD)/obj/authpass.o: \
-    src/utils/authpass.c $(DEPS_14)
+    src/utils/authpass.c $(DEPS_13)
 	@echo '   [Compile] $(BUILD)/obj/authpass.o'
 	$(CC) -c -o $(BUILD)/obj/authpass.o $(CFLAGS) $(DFLAGS) -D_FILE_OFFSET_BITS=64 -D_FILE_OFFSET_BITS=64 -DMBEDTLS_USER_CONFIG_FILE=\"embedtls.h\" $(IFLAGS) src/utils/authpass.c
 
@@ -318,15 +318,15 @@ $(BUILD)/obj/authpass.o: \
 #   appweb.h
 #
 
-src/appweb.h: $(DEPS_15)
+src/appweb.h: $(DEPS_14)
 
 #
 #   cgiHandler.o
 #
-DEPS_16 += src/appweb.h
+DEPS_15 += src/appweb.h
 
 $(BUILD)/obj/cgiHandler.o: \
-    src/modules/cgiHandler.c $(DEPS_16)
+    src/modules/cgiHandler.c $(DEPS_15)
 	@echo '   [Compile] $(BUILD)/obj/cgiHandler.o'
 	$(CC) -c -o $(BUILD)/obj/cgiHandler.o $(CFLAGS) $(DFLAGS) -D_FILE_OFFSET_BITS=64 -D_FILE_OFFSET_BITS=64 -DMBEDTLS_USER_CONFIG_FILE=\"embedtls.h\" $(IFLAGS) src/modules/cgiHandler.c
 
@@ -335,28 +335,28 @@ $(BUILD)/obj/cgiHandler.o: \
 #
 
 $(BUILD)/obj/cgiProgram.o: \
-    test/cgiProgram.c $(DEPS_17)
+    src/utils/cgiProgram.c $(DEPS_16)
 	@echo '   [Compile] $(BUILD)/obj/cgiProgram.o'
-	$(CC) -c -o $(BUILD)/obj/cgiProgram.o $(CFLAGS) $(DFLAGS) $(IFLAGS) test/cgiProgram.c
+	$(CC) -c -o $(BUILD)/obj/cgiProgram.o $(CFLAGS) $(DFLAGS) $(IFLAGS) src/utils/cgiProgram.c
 
 #
 #   config.o
 #
-DEPS_18 += src/appweb.h
-DEPS_18 += $(BUILD)/inc/pcre.h
+DEPS_17 += src/appweb.h
+DEPS_17 += $(BUILD)/inc/pcre.h
 
 $(BUILD)/obj/config.o: \
-    src/config.c $(DEPS_18)
+    src/config.c $(DEPS_17)
 	@echo '   [Compile] $(BUILD)/obj/config.o'
 	$(CC) -c -o $(BUILD)/obj/config.o $(CFLAGS) $(DFLAGS) -D_FILE_OFFSET_BITS=64 -D_FILE_OFFSET_BITS=64 -DMBEDTLS_USER_CONFIG_FILE=\"embedtls.h\" $(IFLAGS) src/config.c
 
 #
 #   convenience.o
 #
-DEPS_19 += src/appweb.h
+DEPS_18 += src/appweb.h
 
 $(BUILD)/obj/convenience.o: \
-    src/convenience.c $(DEPS_19)
+    src/convenience.c $(DEPS_18)
 	@echo '   [Compile] $(BUILD)/obj/convenience.o'
 	$(CC) -c -o $(BUILD)/obj/convenience.o $(CFLAGS) $(DFLAGS) -D_FILE_OFFSET_BITS=64 -D_FILE_OFFSET_BITS=64 -DMBEDTLS_USER_CONFIG_FILE=\"embedtls.h\" $(IFLAGS) src/convenience.c
 
@@ -364,76 +364,92 @@ $(BUILD)/obj/convenience.o: \
 #   esp.h
 #
 
-src/esp/esp.h: $(DEPS_20)
+src/esp/esp.h: $(DEPS_19)
 
 #
 #   esp.o
 #
-DEPS_21 += src/esp/esp.h
-DEPS_21 += $(BUILD)/inc/mpr-version.h
+DEPS_20 += src/esp/esp.h
+DEPS_20 += $(BUILD)/inc/mpr-version.h
 
 $(BUILD)/obj/esp.o: \
-    src/esp/esp.c $(DEPS_21)
+    src/esp/esp.c $(DEPS_20)
 	@echo '   [Compile] $(BUILD)/obj/esp.o'
 	$(CC) -c -o $(BUILD)/obj/esp.o $(CFLAGS) $(DFLAGS) -D_FILE_OFFSET_BITS=64 -D_FILE_OFFSET_BITS=64 -DMBEDTLS_USER_CONFIG_FILE=\"embedtls.h\" $(IFLAGS) src/esp/esp.c
 
 #
 #   espHandler.o
 #
-DEPS_22 += src/appweb.h
-DEPS_22 += $(BUILD)/inc/esp.h
+DEPS_21 += src/appweb.h
+DEPS_21 += $(BUILD)/inc/esp.h
 
 $(BUILD)/obj/espHandler.o: \
-    src/modules/espHandler.c $(DEPS_22)
+    src/modules/espHandler.c $(DEPS_21)
 	@echo '   [Compile] $(BUILD)/obj/espHandler.o'
 	$(CC) -c -o $(BUILD)/obj/espHandler.o $(CFLAGS) $(DFLAGS) -D_FILE_OFFSET_BITS=64 -D_FILE_OFFSET_BITS=64 -DMBEDTLS_USER_CONFIG_FILE=\"embedtls.h\" $(IFLAGS) src/modules/espHandler.c
 
 #
 #   espLib.o
 #
-DEPS_23 += src/esp/esp.h
-DEPS_23 += $(BUILD)/inc/pcre.h
-DEPS_23 += $(BUILD)/inc/http.h
+DEPS_22 += src/esp/esp.h
+DEPS_22 += $(BUILD)/inc/pcre.h
+DEPS_22 += $(BUILD)/inc/http.h
 
 $(BUILD)/obj/espLib.o: \
-    src/esp/espLib.c $(DEPS_23)
+    src/esp/espLib.c $(DEPS_22)
 	@echo '   [Compile] $(BUILD)/obj/espLib.o'
 	$(CC) -c -o $(BUILD)/obj/espLib.o $(CFLAGS) $(DFLAGS) -D_FILE_OFFSET_BITS=64 -D_FILE_OFFSET_BITS=64 -DMBEDTLS_USER_CONFIG_FILE=\"embedtls.h\" $(IFLAGS) src/esp/espLib.c
+
+#
+#   fcgiapp.h
+#
+
+../../../..$(ME_INC_PREFIX)/fcgiapp.h: $(DEPS_23)
+
+#
+#   fastProgram.o
+#
+DEPS_24 += ../../../..$(ME_INC_PREFIX)/fcgiapp.h
+
+$(BUILD)/obj/fastProgram.o: \
+    src/utils/fastProgram.c $(DEPS_24)
+	@echo '   [Compile] $(BUILD)/obj/fastProgram.o'
+	$(CC) -c -o $(BUILD)/obj/fastProgram.o $(CFLAGS) $(DFLAGS) "-I$(ME_INC_PREFIX)" src/utils/fastProgram.c
 
 #
 #   http.h
 #
 
-src/http/http.h: $(DEPS_24)
+src/http/http.h: $(DEPS_25)
 
 #
 #   http.o
 #
-DEPS_25 += src/http/http.h
+DEPS_26 += src/http/http.h
 
 $(BUILD)/obj/http.o: \
-    src/http/http.c $(DEPS_25)
+    src/http/http.c $(DEPS_26)
 	@echo '   [Compile] $(BUILD)/obj/http.o'
 	$(CC) -c -o $(BUILD)/obj/http.o $(CFLAGS) $(DFLAGS) -D_FILE_OFFSET_BITS=64 -D_FILE_OFFSET_BITS=64 -DMBEDTLS_USER_CONFIG_FILE=\"embedtls.h\" $(IFLAGS) src/http/http.c
 
 #
 #   httpLib.o
 #
-DEPS_26 += src/http/http.h
-DEPS_26 += $(BUILD)/inc/pcre.h
+DEPS_27 += src/http/http.h
+DEPS_27 += $(BUILD)/inc/pcre.h
 
 $(BUILD)/obj/httpLib.o: \
-    src/http/httpLib.c $(DEPS_26)
+    src/http/httpLib.c $(DEPS_27)
 	@echo '   [Compile] $(BUILD)/obj/httpLib.o'
 	$(CC) -c -o $(BUILD)/obj/httpLib.o $(CFLAGS) $(DFLAGS) -D_FILE_OFFSET_BITS=64 -D_FILE_OFFSET_BITS=64 -DMBEDTLS_USER_CONFIG_FILE=\"embedtls.h\" $(IFLAGS) src/http/httpLib.c
 
 #
 #   makerom.o
 #
-DEPS_27 += $(BUILD)/inc/mpr.h
+DEPS_28 += $(BUILD)/inc/mpr.h
 
 $(BUILD)/obj/makerom.o: \
-    src/makerom/makerom.c $(DEPS_27)
+    src/makerom/makerom.c $(DEPS_28)
 	@echo '   [Compile] $(BUILD)/obj/makerom.o'
 	$(CC) -c -o $(BUILD)/obj/makerom.o $(CFLAGS) $(DFLAGS) -D_FILE_OFFSET_BITS=64 -D_FILE_OFFSET_BITS=64 -DMBEDTLS_USER_CONFIG_FILE=\"embedtls.h\" $(IFLAGS) src/makerom/makerom.c
 
@@ -441,25 +457,25 @@ $(BUILD)/obj/makerom.o: \
 #   mbedtls.h
 #
 
-src/mbedtls/mbedtls.h: $(DEPS_28)
+src/mbedtls/mbedtls.h: $(DEPS_29)
 
 #
 #   mbedtls.o
 #
-DEPS_29 += src/mbedtls/mbedtls.h
+DEPS_30 += src/mbedtls/mbedtls.h
 
 $(BUILD)/obj/mbedtls.o: \
-    src/mbedtls/mbedtls.c $(DEPS_29)
+    src/mbedtls/mbedtls.c $(DEPS_30)
 	@echo '   [Compile] $(BUILD)/obj/mbedtls.o'
 	$(CC) -c -o $(BUILD)/obj/mbedtls.o $(CFLAGS) $(DFLAGS) -DMBEDTLS_USER_CONFIG_FILE=\"embedtls.h\" $(IFLAGS) src/mbedtls/mbedtls.c
 
 #
 #   mpr-mbedtls.o
 #
-DEPS_30 += $(BUILD)/inc/mpr.h
+DEPS_31 += $(BUILD)/inc/mpr.h
 
 $(BUILD)/obj/mpr-mbedtls.o: \
-    src/mpr-mbedtls/mpr-mbedtls.c $(DEPS_30)
+    src/mpr-mbedtls/mpr-mbedtls.c $(DEPS_31)
 	@echo '   [Compile] $(BUILD)/obj/mpr-mbedtls.o'
 	$(CC) -c -o $(BUILD)/obj/mpr-mbedtls.o $(CFLAGS) $(DFLAGS) -D_FILE_OFFSET_BITS=64 -DMBEDTLS_USER_CONFIG_FILE=\"embedtls.h\" $(IFLAGS) src/mpr-mbedtls/mpr-mbedtls.c
 
@@ -467,16 +483,16 @@ $(BUILD)/obj/mpr-mbedtls.o: \
 #   mpr-version.h
 #
 
-src/mpr-version/mpr-version.h: $(DEPS_31)
+src/mpr-version/mpr-version.h: $(DEPS_32)
 
 #
 #   mpr-version.o
 #
-DEPS_32 += src/mpr-version/mpr-version.h
-DEPS_32 += $(BUILD)/inc/pcre.h
+DEPS_33 += src/mpr-version/mpr-version.h
+DEPS_33 += $(BUILD)/inc/pcre.h
 
 $(BUILD)/obj/mpr-version.o: \
-    src/mpr-version/mpr-version.c $(DEPS_32)
+    src/mpr-version/mpr-version.c $(DEPS_33)
 	@echo '   [Compile] $(BUILD)/obj/mpr-version.o'
 	$(CC) -c -o $(BUILD)/obj/mpr-version.o $(CFLAGS) $(DFLAGS) $(IFLAGS) src/mpr-version/mpr-version.c
 
@@ -484,15 +500,15 @@ $(BUILD)/obj/mpr-version.o: \
 #   mpr.h
 #
 
-src/mpr/mpr.h: $(DEPS_33)
+src/mpr/mpr.h: $(DEPS_34)
 
 #
 #   mprLib.o
 #
-DEPS_34 += src/mpr/mpr.h
+DEPS_35 += src/mpr/mpr.h
 
 $(BUILD)/obj/mprLib.o: \
-    src/mpr/mprLib.c $(DEPS_34)
+    src/mpr/mprLib.c $(DEPS_35)
 	@echo '   [Compile] $(BUILD)/obj/mprLib.o'
 	$(CC) -c -o $(BUILD)/obj/mprLib.o $(CFLAGS) $(DFLAGS) -D_FILE_OFFSET_BITS=64 -D_FILE_OFFSET_BITS=64 -DMBEDTLS_USER_CONFIG_FILE=\"embedtls.h\" $(IFLAGS) src/mpr/mprLib.c
 
@@ -500,36 +516,46 @@ $(BUILD)/obj/mprLib.o: \
 #   pcre.h
 #
 
-src/pcre/pcre.h: $(DEPS_35)
+src/pcre/pcre.h: $(DEPS_36)
 
 #
 #   pcre.o
 #
-DEPS_36 += $(BUILD)/inc/me.h
-DEPS_36 += src/pcre/pcre.h
+DEPS_37 += $(BUILD)/inc/me.h
+DEPS_37 += src/pcre/pcre.h
 
 $(BUILD)/obj/pcre.o: \
-    src/pcre/pcre.c $(DEPS_36)
+    src/pcre/pcre.c $(DEPS_37)
 	@echo '   [Compile] $(BUILD)/obj/pcre.o'
 	$(CC) -c -o $(BUILD)/obj/pcre.o $(CFLAGS) $(DFLAGS) $(IFLAGS) src/pcre/pcre.c
 
 #
 #   rom.o
 #
-DEPS_37 += $(BUILD)/inc/mpr.h
+DEPS_38 += $(BUILD)/inc/mpr.h
 
 $(BUILD)/obj/rom.o: \
-    src/rom.c $(DEPS_37)
+    src/rom.c $(DEPS_38)
 	@echo '   [Compile] $(BUILD)/obj/rom.o'
 	$(CC) -c -o $(BUILD)/obj/rom.o $(CFLAGS) $(DFLAGS) -D_FILE_OFFSET_BITS=64 -D_FILE_OFFSET_BITS=64 -DMBEDTLS_USER_CONFIG_FILE=\"embedtls.h\" $(IFLAGS) src/rom.c
 
 #
+#   server.o
+#
+DEPS_39 += src/http/http.h
+
+$(BUILD)/obj/server.o: \
+    src/http/server.c $(DEPS_39)
+	@echo '   [Compile] $(BUILD)/obj/server.o'
+	$(CC) -c -o $(BUILD)/obj/server.o $(CFLAGS) $(DFLAGS) -D_FILE_OFFSET_BITS=64 -D_FILE_OFFSET_BITS=64 -DMBEDTLS_USER_CONFIG_FILE=\"embedtls.h\" $(IFLAGS) src/http/server.c
+
+#
 #   watchdog.o
 #
-DEPS_38 += $(BUILD)/inc/mpr.h
+DEPS_40 += $(BUILD)/inc/mpr.h
 
 $(BUILD)/obj/watchdog.o: \
-    src/watchdog/watchdog.c $(DEPS_38)
+    src/watchdog/watchdog.c $(DEPS_40)
 	@echo '   [Compile] $(BUILD)/obj/watchdog.o'
 	$(CC) -c -o $(BUILD)/obj/watchdog.o $(CFLAGS) $(DFLAGS) -D_FILE_OFFSET_BITS=64 -D_FILE_OFFSET_BITS=64 -DMBEDTLS_USER_CONFIG_FILE=\"embedtls.h\" $(IFLAGS) src/watchdog/watchdog.c
 
@@ -537,12 +563,12 @@ ifeq ($(ME_COM_MBEDTLS),1)
 #
 #   libmbedtls
 #
-DEPS_39 += $(BUILD)/inc/osdep.h
-DEPS_39 += $(BUILD)/inc/embedtls.h
-DEPS_39 += $(BUILD)/inc/mbedtls.h
-DEPS_39 += $(BUILD)/obj/mbedtls.o
+DEPS_41 += $(BUILD)/inc/osdep.h
+DEPS_41 += $(BUILD)/inc/embedtls.h
+DEPS_41 += $(BUILD)/inc/mbedtls.h
+DEPS_41 += $(BUILD)/obj/mbedtls.o
 
-$(BUILD)/bin/libmbedtls.a: $(DEPS_39)
+$(BUILD)/bin/libmbedtls.a: $(DEPS_41)
 	@echo '      [Link] $(BUILD)/bin/libmbedtls.a'
 	$(AR) -cr $(BUILD)/bin/libmbedtls.a "$(BUILD)/obj/mbedtls.o"
 endif
@@ -551,10 +577,10 @@ ifeq ($(ME_COM_MBEDTLS),1)
 #
 #   libmpr-mbedtls
 #
-DEPS_40 += $(BUILD)/bin/libmbedtls.a
-DEPS_40 += $(BUILD)/obj/mpr-mbedtls.o
+DEPS_42 += $(BUILD)/bin/libmbedtls.a
+DEPS_42 += $(BUILD)/obj/mpr-mbedtls.o
 
-$(BUILD)/bin/libmpr-mbedtls.a: $(DEPS_40)
+$(BUILD)/bin/libmpr-mbedtls.a: $(DEPS_42)
 	@echo '      [Link] $(BUILD)/bin/libmpr-mbedtls.a'
 	$(AR) -cr $(BUILD)/bin/libmpr-mbedtls.a "$(BUILD)/obj/mpr-mbedtls.o"
 endif
@@ -562,41 +588,41 @@ endif
 #
 #   libmpr
 #
-DEPS_41 += $(BUILD)/inc/osdep.h
+DEPS_43 += $(BUILD)/inc/osdep.h
 ifeq ($(ME_COM_MBEDTLS),1)
-    DEPS_41 += $(BUILD)/bin/libmpr-mbedtls.a
+    DEPS_43 += $(BUILD)/bin/libmpr-mbedtls.a
 endif
 ifeq ($(ME_COM_MBEDTLS),1)
-    DEPS_41 += $(BUILD)/bin/libmbedtls.a
+    DEPS_43 += $(BUILD)/bin/libmbedtls.a
 endif
-DEPS_41 += $(BUILD)/inc/mpr.h
-DEPS_41 += $(BUILD)/obj/mprLib.o
+DEPS_43 += $(BUILD)/inc/mpr.h
+DEPS_43 += $(BUILD)/obj/mprLib.o
 
 ifeq ($(ME_COM_MBEDTLS),1)
-    LIBS_41 += -lmbedtls
+    LIBS_43 += -lmbedtls
 endif
 ifeq ($(ME_COM_MBEDTLS),1)
-    LIBS_41 += -lmpr-mbedtls
+    LIBS_43 += -lmpr-mbedtls
 endif
 ifeq ($(ME_COM_MBEDTLS),1)
-    LIBS_41 += -lmbedtls
+    LIBS_43 += -lmbedtls
 endif
 ifeq ($(ME_COM_MBEDTLS),1)
-    LIBS_41 += -lmpr-mbedtls
+    LIBS_43 += -lmpr-mbedtls
 endif
 
-$(BUILD)/bin/libmpr.so: $(DEPS_41)
+$(BUILD)/bin/libmpr.so: $(DEPS_43)
 	@echo '      [Link] $(BUILD)/bin/libmpr.so'
-	$(CC) -shared -o $(BUILD)/bin/libmpr.so $(LDFLAGS) $(LIBPATHS) "$(BUILD)/obj/mprLib.o" $(LIBPATHS_41) $(LIBS_41) $(LIBS_41) $(LIBS) 
+	$(CC) -shared -o $(BUILD)/bin/libmpr.so $(LDFLAGS) $(LIBPATHS) "$(BUILD)/obj/mprLib.o" $(LIBPATHS_43) $(LIBS_43) $(LIBS_43) $(LIBS) 
 
 ifeq ($(ME_COM_PCRE),1)
 #
 #   libpcre
 #
-DEPS_42 += $(BUILD)/inc/pcre.h
-DEPS_42 += $(BUILD)/obj/pcre.o
+DEPS_44 += $(BUILD)/inc/pcre.h
+DEPS_44 += $(BUILD)/obj/pcre.o
 
-$(BUILD)/bin/libpcre.so: $(DEPS_42)
+$(BUILD)/bin/libpcre.so: $(DEPS_44)
 	@echo '      [Link] $(BUILD)/bin/libpcre.so'
 	$(CC) -shared -o $(BUILD)/bin/libpcre.so $(LDFLAGS) $(LIBPATHS) "$(BUILD)/obj/pcre.o" $(LIBS) 
 endif
@@ -605,46 +631,46 @@ ifeq ($(ME_COM_HTTP),1)
 #
 #   libhttp
 #
-DEPS_43 += $(BUILD)/bin/libmpr.so
+DEPS_45 += $(BUILD)/bin/libmpr.so
 ifeq ($(ME_COM_PCRE),1)
-    DEPS_43 += $(BUILD)/bin/libpcre.so
+    DEPS_45 += $(BUILD)/bin/libpcre.so
 endif
-DEPS_43 += $(BUILD)/inc/http.h
-DEPS_43 += $(BUILD)/obj/httpLib.o
+DEPS_45 += $(BUILD)/inc/http.h
+DEPS_45 += $(BUILD)/obj/httpLib.o
 
 ifeq ($(ME_COM_MBEDTLS),1)
-    LIBS_43 += -lmbedtls
+    LIBS_45 += -lmbedtls
 endif
 ifeq ($(ME_COM_MBEDTLS),1)
-    LIBS_43 += -lmpr-mbedtls
+    LIBS_45 += -lmpr-mbedtls
 endif
 ifeq ($(ME_COM_MBEDTLS),1)
-    LIBS_43 += -lmbedtls
+    LIBS_45 += -lmbedtls
 endif
-LIBS_43 += -lmpr
+LIBS_45 += -lmpr
 ifeq ($(ME_COM_MBEDTLS),1)
-    LIBS_43 += -lmpr-mbedtls
+    LIBS_45 += -lmpr-mbedtls
 endif
 ifeq ($(ME_COM_PCRE),1)
-    LIBS_43 += -lpcre
+    LIBS_45 += -lpcre
 endif
 ifeq ($(ME_COM_PCRE),1)
-    LIBS_43 += -lpcre
+    LIBS_45 += -lpcre
 endif
-LIBS_43 += -lmpr
+LIBS_45 += -lmpr
 
-$(BUILD)/bin/libhttp.so: $(DEPS_43)
+$(BUILD)/bin/libhttp.so: $(DEPS_45)
 	@echo '      [Link] $(BUILD)/bin/libhttp.so'
-	$(CC) -shared -o $(BUILD)/bin/libhttp.so $(LDFLAGS) $(LIBPATHS) "$(BUILD)/obj/httpLib.o" $(LIBPATHS_43) $(LIBS_43) $(LIBS_43) $(LIBS) 
+	$(CC) -shared -o $(BUILD)/bin/libhttp.so $(LDFLAGS) $(LIBPATHS) "$(BUILD)/obj/httpLib.o" $(LIBPATHS_45) $(LIBS_45) $(LIBS_45) $(LIBS) 
 endif
 
 #
 #   libmpr-version
 #
-DEPS_44 += $(BUILD)/inc/mpr-version.h
-DEPS_44 += $(BUILD)/obj/mpr-version.o
+DEPS_46 += $(BUILD)/inc/mpr-version.h
+DEPS_46 += $(BUILD)/obj/mpr-version.o
 
-$(BUILD)/bin/libmpr-version.a: $(DEPS_44)
+$(BUILD)/bin/libmpr-version.a: $(DEPS_46)
 	@echo '      [Link] $(BUILD)/bin/libmpr-version.a'
 	$(AR) -cr $(BUILD)/bin/libmpr-version.a "$(BUILD)/obj/mpr-version.o"
 
@@ -653,245 +679,246 @@ ifeq ($(ME_COM_ESP),1)
 #   libesp
 #
 ifeq ($(ME_COM_HTTP),1)
-    DEPS_45 += $(BUILD)/bin/libhttp.so
+    DEPS_47 += $(BUILD)/bin/libhttp.so
 endif
-DEPS_45 += $(BUILD)/bin/libmpr-version.a
-DEPS_45 += $(BUILD)/inc/esp.h
-DEPS_45 += $(BUILD)/obj/espLib.o
+DEPS_47 += $(BUILD)/bin/libmpr-version.a
+DEPS_47 += $(BUILD)/inc/esp.h
+DEPS_47 += $(BUILD)/obj/espLib.o
 
 ifeq ($(ME_COM_MBEDTLS),1)
-    LIBS_45 += -lmbedtls
+    LIBS_47 += -lmbedtls
 endif
 ifeq ($(ME_COM_MBEDTLS),1)
-    LIBS_45 += -lmpr-mbedtls
+    LIBS_47 += -lmpr-mbedtls
 endif
 ifeq ($(ME_COM_MBEDTLS),1)
-    LIBS_45 += -lmbedtls
+    LIBS_47 += -lmbedtls
 endif
-LIBS_45 += -lmpr
+LIBS_47 += -lmpr
 ifeq ($(ME_COM_MBEDTLS),1)
-    LIBS_45 += -lmpr-mbedtls
+    LIBS_47 += -lmpr-mbedtls
 endif
 ifeq ($(ME_COM_PCRE),1)
-    LIBS_45 += -lpcre
+    LIBS_47 += -lpcre
 endif
 ifeq ($(ME_COM_HTTP),1)
-    LIBS_45 += -lhttp
+    LIBS_47 += -lhttp
 endif
 ifeq ($(ME_COM_PCRE),1)
-    LIBS_45 += -lpcre
+    LIBS_47 += -lpcre
 endif
-LIBS_45 += -lmpr
-LIBS_45 += -lmpr-version
-LIBS_45 += -lmpr-version
+LIBS_47 += -lmpr
+LIBS_47 += -lmpr-version
+LIBS_47 += -lmpr-version
 ifeq ($(ME_COM_HTTP),1)
-    LIBS_45 += -lhttp
+    LIBS_47 += -lhttp
 endif
 
-$(BUILD)/bin/libesp.so: $(DEPS_45)
+$(BUILD)/bin/libesp.so: $(DEPS_47)
 	@echo '      [Link] $(BUILD)/bin/libesp.so'
-	$(CC) -shared -o $(BUILD)/bin/libesp.so $(LDFLAGS) $(LIBPATHS) "$(BUILD)/obj/espLib.o" $(LIBPATHS_45) $(LIBS_45) $(LIBS_45) $(LIBS) 
+	$(CC) -shared -o $(BUILD)/bin/libesp.so $(LDFLAGS) $(LIBPATHS) "$(BUILD)/obj/espLib.o" $(LIBPATHS_47) $(LIBS_47) $(LIBS_47) $(LIBS) 
 endif
 
 #
 #   libappweb
 #
 ifeq ($(ME_COM_ESP),1)
-    DEPS_46 += $(BUILD)/bin/libesp.so
+    DEPS_48 += $(BUILD)/bin/libesp.so
 endif
 ifeq ($(ME_COM_HTTP),1)
-    DEPS_46 += $(BUILD)/bin/libhttp.so
+    DEPS_48 += $(BUILD)/bin/libhttp.so
 endif
-DEPS_46 += $(BUILD)/bin/libmpr.so
-DEPS_46 += $(BUILD)/inc/appweb.h
-DEPS_46 += $(BUILD)/inc/customize.h
-DEPS_46 += $(BUILD)/obj/config.o
-DEPS_46 += $(BUILD)/obj/convenience.o
-DEPS_46 += $(BUILD)/obj/cgiHandler.o
-DEPS_46 += $(BUILD)/obj/espHandler.o
-DEPS_46 += $(BUILD)/obj/rom.o
+DEPS_48 += $(BUILD)/bin/libmpr.so
+DEPS_48 += $(BUILD)/bin/libmpr-version.a
+DEPS_48 += $(BUILD)/inc/appweb.h
+DEPS_48 += $(BUILD)/inc/customize.h
+DEPS_48 += $(BUILD)/obj/config.o
+DEPS_48 += $(BUILD)/obj/convenience.o
+DEPS_48 += $(BUILD)/obj/cgiHandler.o
+DEPS_48 += $(BUILD)/obj/espHandler.o
+DEPS_48 += $(BUILD)/obj/rom.o
 
 ifeq ($(ME_COM_MBEDTLS),1)
-    LIBS_46 += -lmbedtls
+    LIBS_48 += -lmbedtls
 endif
 ifeq ($(ME_COM_MBEDTLS),1)
-    LIBS_46 += -lmpr-mbedtls
+    LIBS_48 += -lmpr-mbedtls
 endif
 ifeq ($(ME_COM_MBEDTLS),1)
-    LIBS_46 += -lmbedtls
+    LIBS_48 += -lmbedtls
 endif
-LIBS_46 += -lmpr
+LIBS_48 += -lmpr
 ifeq ($(ME_COM_MBEDTLS),1)
-    LIBS_46 += -lmpr-mbedtls
+    LIBS_48 += -lmpr-mbedtls
 endif
 ifeq ($(ME_COM_PCRE),1)
-    LIBS_46 += -lpcre
+    LIBS_48 += -lpcre
 endif
 ifeq ($(ME_COM_HTTP),1)
-    LIBS_46 += -lhttp
+    LIBS_48 += -lhttp
 endif
 ifeq ($(ME_COM_PCRE),1)
-    LIBS_46 += -lpcre
+    LIBS_48 += -lpcre
 endif
-LIBS_46 += -lmpr
-LIBS_46 += -lmpr-version
+LIBS_48 += -lmpr
+LIBS_48 += -lmpr-version
 ifeq ($(ME_COM_ESP),1)
-    LIBS_46 += -lesp
+    LIBS_48 += -lesp
 endif
-LIBS_46 += -lmpr-version
+LIBS_48 += -lmpr-version
 ifeq ($(ME_COM_HTTP),1)
-    LIBS_46 += -lhttp
+    LIBS_48 += -lhttp
 endif
 ifeq ($(ME_COM_ESP),1)
-    LIBS_46 += -lesp
+    LIBS_48 += -lesp
 endif
 
-$(BUILD)/bin/libappweb.so: $(DEPS_46)
+$(BUILD)/bin/libappweb.so: $(DEPS_48)
 	@echo '      [Link] $(BUILD)/bin/libappweb.so'
-	$(CC) -shared -o $(BUILD)/bin/libappweb.so $(LDFLAGS) $(LIBPATHS) "$(BUILD)/obj/config.o" "$(BUILD)/obj/convenience.o" "$(BUILD)/obj/cgiHandler.o" "$(BUILD)/obj/espHandler.o" "$(BUILD)/obj/rom.o" $(LIBPATHS_46) $(LIBS_46) $(LIBS_46) $(LIBS) 
+	$(CC) -shared -o $(BUILD)/bin/libappweb.so $(LDFLAGS) $(LIBPATHS) "$(BUILD)/obj/config.o" "$(BUILD)/obj/convenience.o" "$(BUILD)/obj/cgiHandler.o" "$(BUILD)/obj/espHandler.o" "$(BUILD)/obj/rom.o" $(LIBPATHS_48) $(LIBS_48) $(LIBS_48) $(LIBS) 
 
 #
 #   appweb
 #
-DEPS_47 += $(BUILD)/bin/libappweb.so
-DEPS_47 += $(BUILD)/obj/appweb.o
+DEPS_49 += $(BUILD)/bin/libappweb.so
+DEPS_49 += $(BUILD)/obj/appweb.o
 
 ifeq ($(ME_COM_MBEDTLS),1)
-    LIBS_47 += -lmbedtls
+    LIBS_49 += -lmbedtls
 endif
 ifeq ($(ME_COM_MBEDTLS),1)
-    LIBS_47 += -lmpr-mbedtls
+    LIBS_49 += -lmpr-mbedtls
 endif
 ifeq ($(ME_COM_MBEDTLS),1)
-    LIBS_47 += -lmbedtls
+    LIBS_49 += -lmbedtls
 endif
-LIBS_47 += -lmpr
+LIBS_49 += -lmpr
 ifeq ($(ME_COM_MBEDTLS),1)
-    LIBS_47 += -lmpr-mbedtls
+    LIBS_49 += -lmpr-mbedtls
 endif
 ifeq ($(ME_COM_PCRE),1)
-    LIBS_47 += -lpcre
+    LIBS_49 += -lpcre
 endif
 ifeq ($(ME_COM_HTTP),1)
-    LIBS_47 += -lhttp
+    LIBS_49 += -lhttp
 endif
 ifeq ($(ME_COM_PCRE),1)
-    LIBS_47 += -lpcre
+    LIBS_49 += -lpcre
 endif
-LIBS_47 += -lmpr
-LIBS_47 += -lmpr-version
+LIBS_49 += -lmpr
+LIBS_49 += -lmpr-version
 ifeq ($(ME_COM_ESP),1)
-    LIBS_47 += -lesp
+    LIBS_49 += -lesp
 endif
-LIBS_47 += -lmpr-version
+LIBS_49 += -lmpr-version
 ifeq ($(ME_COM_HTTP),1)
-    LIBS_47 += -lhttp
+    LIBS_49 += -lhttp
 endif
-LIBS_47 += -lappweb
+LIBS_49 += -lappweb
 ifeq ($(ME_COM_ESP),1)
-    LIBS_47 += -lesp
+    LIBS_49 += -lesp
 endif
 
-$(BUILD)/bin/appweb: $(DEPS_47)
+$(BUILD)/bin/appweb: $(DEPS_49)
 	@echo '      [Link] $(BUILD)/bin/appweb'
-	$(CC) -o $(BUILD)/bin/appweb $(LDFLAGS) $(LIBPATHS) "$(BUILD)/obj/appweb.o" $(LIBPATHS_47) $(LIBS_47) $(LIBS_47) $(LIBS) $(LIBS) 
+	$(CC) -o $(BUILD)/bin/appweb $(LDFLAGS) $(LIBPATHS) "$(BUILD)/obj/appweb.o" $(LIBPATHS_49) $(LIBS_49) $(LIBS_49) $(LIBS) $(LIBS) 
 
 #
 #   authpass
 #
-DEPS_48 += $(BUILD)/bin/libappweb.so
-DEPS_48 += $(BUILD)/obj/authpass.o
+DEPS_50 += $(BUILD)/bin/libappweb.so
+DEPS_50 += $(BUILD)/obj/authpass.o
 
 ifeq ($(ME_COM_MBEDTLS),1)
-    LIBS_48 += -lmbedtls
+    LIBS_50 += -lmbedtls
 endif
 ifeq ($(ME_COM_MBEDTLS),1)
-    LIBS_48 += -lmpr-mbedtls
+    LIBS_50 += -lmpr-mbedtls
 endif
 ifeq ($(ME_COM_MBEDTLS),1)
-    LIBS_48 += -lmbedtls
+    LIBS_50 += -lmbedtls
 endif
-LIBS_48 += -lmpr
+LIBS_50 += -lmpr
 ifeq ($(ME_COM_MBEDTLS),1)
-    LIBS_48 += -lmpr-mbedtls
+    LIBS_50 += -lmpr-mbedtls
 endif
 ifeq ($(ME_COM_PCRE),1)
-    LIBS_48 += -lpcre
+    LIBS_50 += -lpcre
 endif
 ifeq ($(ME_COM_HTTP),1)
-    LIBS_48 += -lhttp
+    LIBS_50 += -lhttp
 endif
 ifeq ($(ME_COM_PCRE),1)
-    LIBS_48 += -lpcre
+    LIBS_50 += -lpcre
 endif
-LIBS_48 += -lmpr
-LIBS_48 += -lmpr-version
+LIBS_50 += -lmpr
+LIBS_50 += -lmpr-version
 ifeq ($(ME_COM_ESP),1)
-    LIBS_48 += -lesp
+    LIBS_50 += -lesp
 endif
-LIBS_48 += -lmpr-version
+LIBS_50 += -lmpr-version
 ifeq ($(ME_COM_HTTP),1)
-    LIBS_48 += -lhttp
+    LIBS_50 += -lhttp
 endif
-LIBS_48 += -lappweb
+LIBS_50 += -lappweb
 ifeq ($(ME_COM_ESP),1)
-    LIBS_48 += -lesp
+    LIBS_50 += -lesp
 endif
 
-$(BUILD)/bin/authpass: $(DEPS_48)
+$(BUILD)/bin/authpass: $(DEPS_50)
 	@echo '      [Link] $(BUILD)/bin/authpass'
-	$(CC) -o $(BUILD)/bin/authpass $(LDFLAGS) $(LIBPATHS) "$(BUILD)/obj/authpass.o" $(LIBPATHS_48) $(LIBS_48) $(LIBS_48) $(LIBS) $(LIBS) 
+	$(CC) -o $(BUILD)/bin/authpass $(LDFLAGS) $(LIBPATHS) "$(BUILD)/obj/authpass.o" $(LIBPATHS_50) $(LIBS_50) $(LIBS_50) $(LIBS) $(LIBS) 
 
 ifeq ($(ME_COM_ESP),1)
 #
 #   espcmd
 #
-DEPS_49 += $(BUILD)/bin/libesp.so
-DEPS_49 += $(BUILD)/obj/esp.o
+DEPS_51 += $(BUILD)/bin/libesp.so
+DEPS_51 += $(BUILD)/obj/esp.o
 
 ifeq ($(ME_COM_MBEDTLS),1)
-    LIBS_49 += -lmbedtls
+    LIBS_51 += -lmbedtls
 endif
 ifeq ($(ME_COM_MBEDTLS),1)
-    LIBS_49 += -lmpr-mbedtls
+    LIBS_51 += -lmpr-mbedtls
 endif
 ifeq ($(ME_COM_MBEDTLS),1)
-    LIBS_49 += -lmbedtls
+    LIBS_51 += -lmbedtls
 endif
-LIBS_49 += -lmpr
+LIBS_51 += -lmpr
 ifeq ($(ME_COM_MBEDTLS),1)
-    LIBS_49 += -lmpr-mbedtls
+    LIBS_51 += -lmpr-mbedtls
 endif
 ifeq ($(ME_COM_PCRE),1)
-    LIBS_49 += -lpcre
+    LIBS_51 += -lpcre
 endif
 ifeq ($(ME_COM_HTTP),1)
-    LIBS_49 += -lhttp
+    LIBS_51 += -lhttp
 endif
 ifeq ($(ME_COM_PCRE),1)
-    LIBS_49 += -lpcre
+    LIBS_51 += -lpcre
 endif
-LIBS_49 += -lmpr
-LIBS_49 += -lmpr-version
-LIBS_49 += -lesp
-LIBS_49 += -lmpr-version
+LIBS_51 += -lmpr
+LIBS_51 += -lmpr-version
+LIBS_51 += -lesp
+LIBS_51 += -lmpr-version
 ifeq ($(ME_COM_HTTP),1)
-    LIBS_49 += -lhttp
+    LIBS_51 += -lhttp
 endif
 
-$(BUILD)/bin/appweb-esp: $(DEPS_49)
+$(BUILD)/bin/appweb-esp: $(DEPS_51)
 	@echo '      [Link] $(BUILD)/bin/appweb-esp'
-	$(CC) -o $(BUILD)/bin/appweb-esp $(LDFLAGS) $(LIBPATHS) "$(BUILD)/obj/esp.o" $(LIBPATHS_49) $(LIBS_49) $(LIBS_49) $(LIBS) $(LIBS) 
+	$(CC) -o $(BUILD)/bin/appweb-esp $(LDFLAGS) $(LIBPATHS) "$(BUILD)/obj/esp.o" $(LIBPATHS_51) $(LIBS_51) $(LIBS_51) $(LIBS) $(LIBS) 
 endif
 
 ifeq ($(ME_COM_ESP),1)
 #
 #   extras
 #
-DEPS_50 += src/esp/esp-compile.json
-DEPS_50 += src/esp/vcvars.bat
+DEPS_52 += src/esp/esp-compile.json
+DEPS_52 += src/esp/vcvars.bat
 
-$(BUILD)/.extras-modified: $(DEPS_50)
+$(BUILD)/.extras-modified: $(DEPS_52)
 	@echo '      [Copy] $(BUILD)/bin'
 	mkdir -p "$(BUILD)/bin"
 	cp src/esp/esp-compile.json $(BUILD)/bin/esp-compile.json
@@ -903,41 +930,41 @@ ifeq ($(ME_COM_HTTP),1)
 #
 #   httpcmd
 #
-DEPS_51 += $(BUILD)/bin/libhttp.so
-DEPS_51 += $(BUILD)/obj/http.o
+DEPS_53 += $(BUILD)/bin/libhttp.so
+DEPS_53 += $(BUILD)/obj/http.o
 
 ifeq ($(ME_COM_MBEDTLS),1)
-    LIBS_51 += -lmbedtls
+    LIBS_53 += -lmbedtls
 endif
 ifeq ($(ME_COM_MBEDTLS),1)
-    LIBS_51 += -lmpr-mbedtls
+    LIBS_53 += -lmpr-mbedtls
 endif
 ifeq ($(ME_COM_MBEDTLS),1)
-    LIBS_51 += -lmbedtls
+    LIBS_53 += -lmbedtls
 endif
-LIBS_51 += -lmpr
+LIBS_53 += -lmpr
 ifeq ($(ME_COM_MBEDTLS),1)
-    LIBS_51 += -lmpr-mbedtls
+    LIBS_53 += -lmpr-mbedtls
 endif
 ifeq ($(ME_COM_PCRE),1)
-    LIBS_51 += -lpcre
+    LIBS_53 += -lpcre
 endif
-LIBS_51 += -lhttp
+LIBS_53 += -lhttp
 ifeq ($(ME_COM_PCRE),1)
-    LIBS_51 += -lpcre
+    LIBS_53 += -lpcre
 endif
-LIBS_51 += -lmpr
+LIBS_53 += -lmpr
 
-$(BUILD)/bin/http: $(DEPS_51)
+$(BUILD)/bin/http: $(DEPS_53)
 	@echo '      [Link] $(BUILD)/bin/http'
-	$(CC) -o $(BUILD)/bin/http $(LDFLAGS) $(LIBPATHS) "$(BUILD)/obj/http.o" $(LIBPATHS_51) $(LIBS_51) $(LIBS_51) $(LIBS) $(LIBS) 
+	$(CC) -o $(BUILD)/bin/http $(LDFLAGS) $(LIBPATHS) "$(BUILD)/obj/http.o" $(LIBPATHS_53) $(LIBS_53) $(LIBS_53) $(LIBS) $(LIBS) 
 endif
 
 #
 #   installPrep
 #
 
-installPrep: $(DEPS_52)
+installPrep: $(DEPS_54)
 	if [ "`id -u`" != 0 ] ; \
 	then echo "Must run as root. Rerun with sudo." ; \
 	exit 255 ; \
@@ -946,17 +973,17 @@ installPrep: $(DEPS_52)
 #
 #   install-certs
 #
-DEPS_53 += src/certs/samples/ca.crt
-DEPS_53 += src/certs/samples/ca.key
-DEPS_53 += src/certs/samples/ec.crt
-DEPS_53 += src/certs/samples/ec.key
-DEPS_53 += src/certs/samples/roots.crt
-DEPS_53 += src/certs/samples/self.crt
-DEPS_53 += src/certs/samples/self.key
-DEPS_53 += src/certs/samples/test.crt
-DEPS_53 += src/certs/samples/test.key
+DEPS_55 += src/certs/samples/ca.crt
+DEPS_55 += src/certs/samples/ca.key
+DEPS_55 += src/certs/samples/ec.crt
+DEPS_55 += src/certs/samples/ec.key
+DEPS_55 += src/certs/samples/roots.crt
+DEPS_55 += src/certs/samples/self.crt
+DEPS_55 += src/certs/samples/self.key
+DEPS_55 += src/certs/samples/test.crt
+DEPS_55 += src/certs/samples/test.key
 
-$(BUILD)/.install-certs-modified: $(DEPS_53)
+$(BUILD)/.install-certs-modified: $(DEPS_55)
 	@echo '      [Copy] $(BUILD)/bin'
 	mkdir -p "$(BUILD)/bin"
 	cp src/certs/samples/ca.crt $(BUILD)/bin/ca.crt
@@ -973,43 +1000,8 @@ $(BUILD)/.install-certs-modified: $(DEPS_53)
 #
 #   makerom
 #
-DEPS_54 += $(BUILD)/bin/libmpr.so
-DEPS_54 += $(BUILD)/obj/makerom.o
-
-ifeq ($(ME_COM_MBEDTLS),1)
-    LIBS_54 += -lmbedtls
-endif
-ifeq ($(ME_COM_MBEDTLS),1)
-    LIBS_54 += -lmpr-mbedtls
-endif
-ifeq ($(ME_COM_MBEDTLS),1)
-    LIBS_54 += -lmbedtls
-endif
-LIBS_54 += -lmpr
-ifeq ($(ME_COM_MBEDTLS),1)
-    LIBS_54 += -lmpr-mbedtls
-endif
-
-$(BUILD)/bin/makerom: $(DEPS_54)
-	@echo '      [Link] $(BUILD)/bin/makerom'
-	$(CC) -o $(BUILD)/bin/makerom $(LDFLAGS) $(LIBPATHS) "$(BUILD)/obj/makerom.o" $(LIBPATHS_54) $(LIBS_54) $(LIBS_54) $(LIBS) $(LIBS) 
-
-#
-#   server-cache
-#
-
-src/server/cache: $(DEPS_55)
-	( \
-	cd src/server; \
-	mkdir -p "cache" ; \
-	)
-
-ifeq ($(ME_COM_WATCHDOG),1)
-#
-#   watchdog
-#
 DEPS_56 += $(BUILD)/bin/libmpr.so
-DEPS_56 += $(BUILD)/obj/watchdog.o
+DEPS_56 += $(BUILD)/obj/makerom.o
 
 ifeq ($(ME_COM_MBEDTLS),1)
     LIBS_56 += -lmbedtls
@@ -1025,24 +1017,95 @@ ifeq ($(ME_COM_MBEDTLS),1)
     LIBS_56 += -lmpr-mbedtls
 endif
 
-$(BUILD)/bin/appman: $(DEPS_56)
+$(BUILD)/bin/makerom: $(DEPS_56)
+	@echo '      [Link] $(BUILD)/bin/makerom'
+	$(CC) -o $(BUILD)/bin/makerom $(LDFLAGS) $(LIBPATHS) "$(BUILD)/obj/makerom.o" $(LIBPATHS_56) $(LIBS_56) $(LIBS_56) $(LIBS) $(LIBS) 
+
+#
+#   server
+#
+ifeq ($(ME_COM_HTTP),1)
+    DEPS_57 += $(BUILD)/bin/libhttp.so
+endif
+DEPS_57 += $(BUILD)/obj/server.o
+
+ifeq ($(ME_COM_MBEDTLS),1)
+    LIBS_57 += -lmbedtls
+endif
+ifeq ($(ME_COM_MBEDTLS),1)
+    LIBS_57 += -lmpr-mbedtls
+endif
+ifeq ($(ME_COM_MBEDTLS),1)
+    LIBS_57 += -lmbedtls
+endif
+LIBS_57 += -lmpr
+ifeq ($(ME_COM_MBEDTLS),1)
+    LIBS_57 += -lmpr-mbedtls
+endif
+ifeq ($(ME_COM_PCRE),1)
+    LIBS_57 += -lpcre
+endif
+ifeq ($(ME_COM_HTTP),1)
+    LIBS_57 += -lhttp
+endif
+ifeq ($(ME_COM_PCRE),1)
+    LIBS_57 += -lpcre
+endif
+LIBS_57 += -lmpr
+
+$(BUILD)/bin/server: $(DEPS_57)
+	@echo '      [Link] $(BUILD)/bin/server'
+	$(CC) -o $(BUILD)/bin/server $(LDFLAGS) $(LIBPATHS) "$(BUILD)/obj/server.o" $(LIBPATHS_57) $(LIBS_57) $(LIBS_57) $(LIBS) $(LIBS) 
+
+#
+#   server-cache
+#
+
+src/server/cache: $(DEPS_58)
+	( \
+	cd src/server; \
+	mkdir -p "cache" ; \
+	)
+
+ifeq ($(ME_COM_WATCHDOG),1)
+#
+#   watchdog
+#
+DEPS_59 += $(BUILD)/bin/libmpr.so
+DEPS_59 += $(BUILD)/obj/watchdog.o
+
+ifeq ($(ME_COM_MBEDTLS),1)
+    LIBS_59 += -lmbedtls
+endif
+ifeq ($(ME_COM_MBEDTLS),1)
+    LIBS_59 += -lmpr-mbedtls
+endif
+ifeq ($(ME_COM_MBEDTLS),1)
+    LIBS_59 += -lmbedtls
+endif
+LIBS_59 += -lmpr
+ifeq ($(ME_COM_MBEDTLS),1)
+    LIBS_59 += -lmpr-mbedtls
+endif
+
+$(BUILD)/bin/appman: $(DEPS_59)
 	@echo '      [Link] $(BUILD)/bin/appman'
-	$(CC) -o $(BUILD)/bin/appman $(LDFLAGS) $(LIBPATHS) "$(BUILD)/obj/watchdog.o" $(LIBPATHS_56) $(LIBS_56) $(LIBS_56) $(LIBS) $(LIBS) 
+	$(CC) -o $(BUILD)/bin/appman $(LDFLAGS) $(LIBPATHS) "$(BUILD)/obj/watchdog.o" $(LIBPATHS_59) $(LIBS_59) $(LIBS_59) $(LIBS) $(LIBS) 
 endif
 
 #
 #   stop
 #
-DEPS_57 += compile
+DEPS_60 += compile
 
-stop: $(DEPS_57)
+stop: $(DEPS_60)
 	@./$(BUILD)/bin/appman stop disable uninstall >/dev/null 2>&1 ; true
 
 #
 #   installBinary
 #
 
-installBinary: $(DEPS_58)
+installBinary: $(DEPS_61)
 	mkdir -p "$(ME_APP_PREFIX)" ; \
 	rm -f "$(ME_APP_PREFIX)/latest" ; \
 	ln -s "$(VERSION)" "$(ME_APP_PREFIX)/latest" ; \
@@ -1072,7 +1135,7 @@ installBinary: $(DEPS_58)
 	cp src/server/esp.json $(ME_ETC_PREFIX)/esp.json ; \
 	mkdir -p "$(ME_ETC_PREFIX)" ; \
 	cp src/server/sample.conf $(ME_ETC_PREFIX)/sample.conf ; \
-	echo 'set LOG_DIR "$(ME_LOG_PREFIX)"\nset CACHE_DIR "$(ME_CACHE_PREFIX)"\nDocuments "$(ME_WEB_PREFIX)\nListen 80\n<if SSL_MODULE>\nListenSecure 443\n</if>\n' >$(ME_ETC_PREFIX)/install.conf ; \
+	echo 'set LOG_DIR "$(ME_LOG_PREFIX)"\nset CACHE_DIR "$(ME_CACHE_PREFIX)"\nDocuments "$(ME_WEB_PREFIX)"\nListen 80\n<if SSL_MODULE>\nListenSecure 443\n</if>\n' >$(ME_ETC_PREFIX)/install.conf ; \
 	mkdir -p "$(ME_VAPP_PREFIX)/bin" ; \
 	cp $(BUILD)/bin/libappweb.so $(ME_VAPP_PREFIX)/bin/libappweb.so ; \
 	cp $(BUILD)/bin/libesp.so $(ME_VAPP_PREFIX)/bin/libesp.so ; \
@@ -1136,6 +1199,9 @@ installBinary: $(DEPS_58)
 	mkdir -p "$(ME_VAPP_PREFIX)/bin" ; \
 	cp $(BUILD)/bin/http $(ME_VAPP_PREFIX)/bin/http ; \
 	chmod 755 "$(ME_VAPP_PREFIX)/bin/http" ; \
+	mkdir -p "$(ME_BIN_PREFIX)" ; \
+	rm -f "$(ME_BIN_PREFIX)/http" ; \
+	ln -s "$(ME_VAPP_PREFIX)/bin/http" "$(ME_BIN_PREFIX)/http" ; \
 	mkdir -p "$(ME_VAPP_PREFIX)/inc" ; \
 	cp $(BUILD)/inc/me.h $(ME_VAPP_PREFIX)/inc/me.h ; \
 	mkdir -p "$(ME_INC_PREFIX)/appweb" ; \
@@ -1205,29 +1271,29 @@ installBinary: $(DEPS_58)
 #
 #   start
 #
-DEPS_59 += compile
-DEPS_59 += stop
+DEPS_62 += compile
+DEPS_62 += stop
 
-start: $(DEPS_59)
+start: $(DEPS_62)
 	./$(BUILD)/bin/appman install enable start
 
 #
 #   install
 #
-DEPS_60 += installPrep
-DEPS_60 += compile
-DEPS_60 += stop
-DEPS_60 += installBinary
-DEPS_60 += start
+DEPS_63 += installPrep
+DEPS_63 += compile
+DEPS_63 += stop
+DEPS_63 += installBinary
+DEPS_63 += start
 
-install: $(DEPS_60)
+install: $(DEPS_63)
 
 #
 #   run
 #
-DEPS_61 += compile
+DEPS_64 += compile
 
-run: $(DEPS_61)
+run: $(DEPS_64)
 	( \
 	cd src/server; \
 	../../$(BUILD)/bin/appweb --log stdout:2 ; \
@@ -1236,9 +1302,9 @@ run: $(DEPS_61)
 #
 #   uninstall
 #
-DEPS_62 += stop
+DEPS_65 += stop
 
-uninstall: $(DEPS_62)
+uninstall: $(DEPS_65)
 	( \
 	cd installs; \
 	rm -f "$(ME_ETC_PREFIX)/appweb.conf" ; \
@@ -1252,7 +1318,7 @@ uninstall: $(DEPS_62)
 #   uninstallBinary
 #
 
-uninstallBinary: $(DEPS_63)
+uninstallBinary: $(DEPS_66)
 	rm -fr "$(ME_WEB_PREFIX)" ; \
 	rm -fr "$(ME_SPOOL_PREFIX)" ; \
 	rm -fr "$(ME_CACHE_PREFIX)" ; \
@@ -1270,6 +1336,6 @@ uninstallBinary: $(DEPS_63)
 #   version
 #
 
-version: $(DEPS_64)
+version: $(DEPS_67)
 	echo $(VERSION)
 

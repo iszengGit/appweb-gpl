@@ -92,10 +92,6 @@
             <table title="sandbox" class="ui table segment">
                 <tbody>
                     <tr>
-                        <td class="pivot">LimitBuffer</td>
-                        <td>Pipeline stage buffer size</td>
-                    </tr>
-                    <tr>
                         <td class="pivot">LimitCache</td>
                         <td>Maximum size of the response cache</td>
                     </tr>
@@ -114,6 +110,10 @@
                     <tr>
                         <td class="pivot">LimitMemory</td>
                         <td>Maximum memory the server can allocate</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">LimitPacket</td>
+                        <td>Pipeline maximum packet size for queues and stages</td>
                     </tr>
                     <tr>
                         <td class="pivot">LimitProcesses</td>
@@ -221,7 +221,7 @@ chmod 755  . lib logs
             <a href="http://en.wikipedia.org/wiki/Chroot">chroot</a> jail. A chroot jail is when an application changes
             its root directory to be isolated from the real file system root directory. Any access then to files outside the jail is protected and impossible. Appweb supports chroot jails via the
             <a href="dir/server.html#chroot">chroot</a> directive and via the appweb --chroot command line option.</p>
-            <p>See also the <a href="https://github.com/embedthis/appweb/tree/dev/samples/chroot-server"
+            <p>See also the <a href="https://github.com/embedthis/appweb-samples/tree/master/chroot-server"
                 >Chroot Sample</a> for a working example.</p>
             <a id="ssl"></a>
             <h2>Securing SSL</h2>

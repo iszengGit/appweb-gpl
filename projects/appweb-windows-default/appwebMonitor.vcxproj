@@ -14,7 +14,7 @@
       </ItemDefinitionGroup>
 
       <PropertyGroup Label="Globals">
-        <ProjectGuid>{9c6a75b5-840b-4598-88d2-103d8ac3b0ae}</ProjectGuid>
+        <ProjectGuid>{4bae3607-93dd-4cc4-8a4a-519575f6d39c}</ProjectGuid>
         <RootNamespace />
         <Keyword>Win32Proj</Keyword>
       </PropertyGroup>
@@ -139,7 +139,7 @@ cd ..\..\projects\appweb-windows-default</Command>
 
     <ItemGroup>
       <ProjectReference Include="libappweb.vcxproj">
-      <Project>1d8ff8ca-ee04-4633-8efc-a6b9ba03dde7</Project>
+      <Project>2dfe338d-39b5-467a-af1e-5b55650ce30b</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       </ProjectReference>
     </ItemGroup>

@@ -51,7 +51,9 @@
                         </td>
                     </tr>
                 </tbody>
-            </table><a id="addType"></a>
+            </table>
+
+            <a id="addType"></a>
             <h2>AddType</h2>
             <table class="directive" title="directive">
                 <tbody>
@@ -302,6 +304,44 @@
                     </tr>
                 </tbody>
             </table>
+
+            <a id="http2"></a>
+            <h2>Http2</h2>
+            <table class="directive" title="directive">
+                <tbody>
+                    <tr>
+                        <td class="pivot">Description</td>
+                        <td>Enable and disable the HTTP/2 protocol </td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Synopsis</td>
+                        <td>Http2 on|off</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Context</td>
+                        <td>Entire server</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Example</td>
+                        <td>Http2 off</td>
+                    </tr>
+                    <tr>
+                        <td class="pivot">Notes</td>
+                        <td>
+                            <p>This directive controls support of the HTTP/2 protocol. If Appweb is built with HTTP/2 support
+                                via the ME_HTTP_HTTP2 compile time directive (default), then Appweb will support both HTTP/1 and HTTP/2.
+
+                            The Http2 directive allows the runtime control of HTTP/2 support. By setting the directive to "off", HTTP/2
+                            will be disabled and only HTTP/1 will be supported. The default value is "on".
+
+                            It is imperative that this directive be used before any ListenSecure directives.
+                            The HTTP/1 protocol is aways supported and cannot be disabled.
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
             <a id="listen"></a>
             <h2>Listen</h2>
             <table class="directive" title="directive">
@@ -312,7 +352,7 @@
                     </tr>
                     <tr>
                         <td class="pivot">Synopsis</td>
-                        <td>Listen [IP address:]portNumber</td>
+                        <td>Listen [IP address:]portNumber [multiple]</td>
                     </tr>
                     <tr>
                         <td class="pivot">Context</td>
@@ -322,6 +362,7 @@
                         <td class="pivot">Examples</td>
                         <td>Listen 80<br />
                             Listen 205.162.77.64:7777<br/>
+                            Listen :4000 multiple</br>
                             Listen [::]
                         </td>
                     </tr>
@@ -338,6 +379,7 @@
                             on all IPv4 interfaces.</p>
                             <p>To listen for SSL requests, use the <a href="ssl.html#listenSecure">ListenSecure</a>
                                 directive.</p>
+                            <p>To permit multiple instances of Appweb to bind to the same listen endpoint, specify the multiple attribute. Multiple binding is supported on Linux only.</p>
                         </td>
                     </tr>
                 </tbody>

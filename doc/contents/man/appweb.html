@@ -25,6 +25,7 @@
            <B>--trace</B> <B>traceSpec</B>
            <B>--version</B>
            <B>--verbose</B>
+           <B>--DIGIT</B>
            <B>[IP][:port]</B> <B>[documentRoot]</B>
 
 
@@ -35,10 +36,10 @@
        for  use  by embedded devices and applications.  It can run as a stand-
        alone web server or the Appweb library can be embedded in applications.
 
-       Appweb supports HTTP/1.1, SSL, digest and basic authentication, virtual
-       hosting, ranged requests, chunked transfers, file upload  and  security
-       limits.  Appweb has an Apache style configuration file and supports the
-       PHP and Ejscript web frameworks.
+       Appweb supports HTTP/1.1, HTTP/2, SSL, digest and basic authentication,
+       virtual hosting, ranged requests, chunked transfers, file upload,  CGI,
+       FastCGI, Proxy and security limits.  Appweb has an Apache style config-
+       uration file and supports the ESP and PHP web frameworks.
 
        Appweb normally reads the <B>appweb.conf</B>  file  for  configuration  direc-
        tives.  However, if appweb is invoked with an IP address or port number
@@ -64,7 +65,7 @@
               chroot jail so that the Appweb process cannot access  any  files
               outside the given directory.
 
-       <B>--debugger</B>
+
        <B>--log</B> <B>logSpec</B>
               Name the Appweb log file. This will override the ErrorLog direc-
               tive in the configuration file. The syntax is:
@@ -87,6 +88,9 @@
 
        <B>--version</B>
               Output the product version number.
+
+       <B>--DIGIT</B>
+              Shorthand for --log stdout:DIGIT --trace stdout:DIGIT.
 
 
 

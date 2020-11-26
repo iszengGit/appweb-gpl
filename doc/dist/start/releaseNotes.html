@@ -42,6 +42,8 @@
                     <a class="item" href="../start/releaseNotes.html">Release Notes</a>
                     <a class="item" href="../start/source.html">Building from Source</a>
                     <a class="item" href="../start/cgi.html">Building with CGI</a>
+                    <a class="item" href="../start/fast.html">Building with FastCGI</a>
+                    <a class="item" href="../start/proxy.html">Building with Proxy</a>
                     <a class="item" href="../start/openssl.html">Building with OpenSSL</a>
                     <a class="item" href="../start/php.html">Building with PHP</a>
                 </div>
@@ -79,7 +81,7 @@
                     <a class="item" href="../developers/action.html">Using the Action Handler</a>
                     <a class="item" href="../developers/stages.html">Creating Pipeline Stages</a>
                     <a class="item" href="../developers/rom.html">Serving Pages from ROM</a>
-                    <a class="item" href="../developers/migrating.html">Upgrading Earlier Releases</a>
+                    <a class="item" href="../developers/migrating.html">Migrating from Earlier Releases</a>
                 </div>
             </div>
             <div class="item">
@@ -96,29 +98,31 @@
             <div class="item">
                 <div class="menu">
                     <a class="header item" href="../users/samples.html">Samples</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/chroot-server">chroot-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/cpp-handler">cpp-handler</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/cpp-module">cpp-module</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/deploy-server">deploy-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/esp-hosted">esp-hosted</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/login-basic">login-basic</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/login-form">login-form</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/max-server">max-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/min-server">min-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/secure-server">secure-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/simple-action">simple-action</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/simple-client">simple-client</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/simple-handler">simple-handler</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/simple-module">simple-module</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/simple-server">simple-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/spy-filter">spy-filter</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/ssl-server">ssl-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/tiny-server">tiny-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/typical-client">typical-client</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/typical-server">typical-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/websockets-chat">websockets-chat</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/websockets-echo">websockets-echo</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/websockets-output">websockets-output</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/chroot-server">chroot-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/cpp-handler">cpp-handler</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/cpp-module">cpp-module</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/deploy-server">deploy-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/esp-hosted">esp-hosted</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/esp-upload">esp-upload</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-basic">login-basic</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-database">login-database</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-form">login-form</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/max-server">max-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/min-server">min-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/secure-server">secure-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-action">simple-action</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-client">simple-client</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-handler">simple-handler</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-module">simple-module</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-server">simple-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/spy-filter">spy-filter</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/ssl-server">ssl-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/tiny-server">tiny-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/typical-client">typical-client</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/typical-server">typical-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-chat">websockets-chat</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-echo">websockets-echo</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-output">websockets-output</a>
                 </div>
             </div>
             <div class="item">
@@ -126,11 +130,9 @@
                     <a class="header item" href="../developers/project.html">Project Resources</a>
                     <a class="item" href="https://embedthis.com/blog/categories/Appweb">Appweb News</a>
                     <a class="item" href="https://embedthis.com/appweb/">Appweb Web Site</a>
-                    <a class="item" href="https://github.com/embedthis/appweb">Source Code Repository</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/issues/389">Appweb Security Alerts</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/issues">Project Issue Database</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/releases">Change Log</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/milestones">Roadmap</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-gpl">Community Repository</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-gpl/issues/2">Appweb Security Alerts</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-gpl/issues">Project Issue Database</a>
                     <a class="item" href="https://embedthis.com/developers/contributors.html">Contributors Agreement</a>
                 </div>
             </div>
@@ -158,7 +160,7 @@
                     <a class="item" href="https://embedthis.com/appweb/">Appweb Site</a>
                     <span class="desktop-only">
                         <a class="item" href="https://embedthis.com/blog/categories/Appweb">Appweb News</a>
-                        <a class="item" href="https://github.com/embedthis/appweb">Repository</a>
+                        <a class="item" href="https://github.com/embedthis/appweb-gpl">Repository</a>
                         <a class="item" href="https://embedthis.com/blog/">Blog</a>
                         <a class="item" href="https://twitter.com/embedthat">Twitter</a>
                     </span>
@@ -197,9 +199,15 @@
 
             <a id="licensing"></a>
             <h2>License</h2>
-            <p>This software is copyrighted and distributed under license. It is available under a GPLv2 open source
-            license and an optional <a href="https://embedthis.com/licensing/">commercial license</a>.
-            Please read LICENSE.md for details.</p>
+            <p>This software is copyrighted and distributed under license. It is published via two editions:
+            <ul>
+                <li>Embedthis Appweb Enterprise Edition</li>
+                <li>Embedthis Appweb Community Edition</li>
+            </ul>
+            <p>The Enterprise edition is a royalty free, commercially licensed edition with options for commercial maintenance and support. Contact <a href="mailto:dev@embedthis.com">sales@embedthis.com</a> for details.
+            The Community edition is an open source licensed edition of Appweb provided under the GPL license.</p>
+            <p>You may use Appweb with either license. Please read <a href="../licensing/index.html">Licensing</a> for further details.</p>
+
             <p>Appweb includes support for several external packages such as OpenSSL, and PHP. These
             packages have their own licenses. Make sure you check the relevant package license details to ensure you are
             complying with their licenses.</p>
@@ -209,27 +217,27 @@
             <p>Binary releases are supplied for the following operating systems.</p>
             <ul>
                 <li>Windows (x86)</li>
-                <li>Mac OS X (Mountain Lion-x64)</li>
+                <li>Mac OS )</li>
             </ul>
             <p>The following operating systems may be supported by recompiling Appweb from source.</p>
             <ul>
                 <li>FreeBSD 10.X</li>
-                <li>Linux 2.6 and later</li>
-                <li>Mac OS X 10.9 and later </li>
-                <li>VxWorks 6.X</li>
-                <li>Windows 7 and later</li>
+                <li>Linux 3 and later</li>
+                <li>Mac OS 10.11 and later </li>
+                <li>VxWorks 7.X and later (unsupported)</li>
+                <li>Windows 8 and later</li>
             </ul>
             <p>The following CPU architectures are supported: arm, mips, ppc, xscale, x86, x64, sparc.</p>
 
             <h2>Run-time System Requirements</h2>
             <p>To deploy Appweb in an embedded environment, you will need at least the following:</p>
             <ul>
-                <li>1-2 MB Disk/ROM space &mdash; depending on the application size</li>
-                <li>1-4 MB RAM</li>
+                <li>2-4 MB Disk/ROM space &mdash; depending on the application size</li>
+                <li>2-4 MB RAM</li>
             </ul>
 
             <h2>Build and Tool Requirements</h2>
-            <p>If you are building the software from source or using 
+            <p>If you are building the software from source or using
                 <a href="https://embedthis.com/expansive/">Expansive</a> to render web applications you may require:</p>
             <ul>
                 <li><a href="https://embedthis.com/makeme/">MakeMe</a> version 0.8.6 or later to build with MakeMe.</li>
@@ -245,10 +253,10 @@
             <ul>
                 <li>Linux GNU tools</li>
                 <li>Mac Xcode 6.4 and later</li>
-                <li>Windows Visual Studio 2013 and later</li>
+                <li>Windows Visual Studio 2017 and later</li>
                 <li>WindRiver Tornado Development Tools.</li>
             </ul>
-            
+
             <a id="hints"></a>
             <h2>Helpful Hints</h2>
             <h3>Debug Trace and Logging</h3>
@@ -266,7 +274,7 @@ appweb -v
             <p>The log level can be from 0 to 5, with 5 being the most verbose level.</p>
             <p>Similarly you can emit HTTP request trace using the <em>--trace</em> switch.</p>
             <pre class="ui code segment">appweb --trace traceFile:traceLevel</pre>
-            <p>The <em>-v</em> switch will emit request trace to the standard output at level 2 combined with the 
+            <p>The <em>-v</em> switch will emit request trace to the standard output at level 2 combined with the
             error log.</p>
 
     </div>

@@ -2,7 +2,7 @@
     <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
       <PropertyGroup Label="Globals">
-        <ProjectGuid>{1115bd34-7036-4d80-b827-b963390d9ebb}</ProjectGuid>
+        <ProjectGuid>{1e18fc9b-ce91-444b-8701-be39c726a2ea}</ProjectGuid>
         <RootNamespace />
         <Keyword>Win32Proj</Keyword>
       </PropertyGroup>

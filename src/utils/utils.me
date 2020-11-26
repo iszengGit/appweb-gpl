@@ -10,5 +10,24 @@ Me.load({
             depends: [ 'libappweb' ],
             platforms: [ 'local' ],
         },
-	},
+
+        'cgiProgram': {
+            type:   'exe',
+            sources: [ 'cgiProgram.c' ],
+            ifdef: [ 'cgi' ],
+            action: true,
+            generate: false,
+        },
+
+        'fastProgram': {
+            type:   'exe',
+            sources: [ 'fastProgram.c' ],
+            ifdef: [ 'fast' ],
+            includes: [ '/usr/local/include' ],
+            libraries: [ 'fcgi' ],
+            action: true,
+            generate: false,
+            enable: `Path('/usr/local/lib').files('libfcgi*').length > 0`,
+        },
+    },
 })

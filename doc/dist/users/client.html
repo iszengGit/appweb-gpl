@@ -42,6 +42,8 @@
                     <a class="item" href="../start/releaseNotes.html">Release Notes</a>
                     <a class="item" href="../start/source.html">Building from Source</a>
                     <a class="item" href="../start/cgi.html">Building with CGI</a>
+                    <a class="item" href="../start/fast.html">Building with FastCGI</a>
+                    <a class="item" href="../start/proxy.html">Building with Proxy</a>
                     <a class="item" href="../start/openssl.html">Building with OpenSSL</a>
                     <a class="item" href="../start/php.html">Building with PHP</a>
                 </div>
@@ -79,7 +81,7 @@
                     <a class="item" href="../developers/action.html">Using the Action Handler</a>
                     <a class="item" href="../developers/stages.html">Creating Pipeline Stages</a>
                     <a class="item" href="../developers/rom.html">Serving Pages from ROM</a>
-                    <a class="item" href="../developers/migrating.html">Upgrading Earlier Releases</a>
+                    <a class="item" href="../developers/migrating.html">Migrating from Earlier Releases</a>
                 </div>
             </div>
             <div class="item">
@@ -96,29 +98,31 @@
             <div class="item">
                 <div class="menu">
                     <a class="header item" href="../users/samples.html">Samples</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/chroot-server">chroot-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/cpp-handler">cpp-handler</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/cpp-module">cpp-module</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/deploy-server">deploy-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/esp-hosted">esp-hosted</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/login-basic">login-basic</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/login-form">login-form</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/max-server">max-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/min-server">min-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/secure-server">secure-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/simple-action">simple-action</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/simple-client">simple-client</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/simple-handler">simple-handler</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/simple-module">simple-module</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/simple-server">simple-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/spy-filter">spy-filter</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/ssl-server">ssl-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/tiny-server">tiny-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/typical-client">typical-client</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/typical-server">typical-server</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/websockets-chat">websockets-chat</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/websockets-echo">websockets-echo</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/tree/dev/samples/websockets-output">websockets-output</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/chroot-server">chroot-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/cpp-handler">cpp-handler</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/cpp-module">cpp-module</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/deploy-server">deploy-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/esp-hosted">esp-hosted</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/esp-upload">esp-upload</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-basic">login-basic</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-database">login-database</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/login-form">login-form</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/max-server">max-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/min-server">min-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/secure-server">secure-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-action">simple-action</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-client">simple-client</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-handler">simple-handler</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-module">simple-module</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/simple-server">simple-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/spy-filter">spy-filter</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/ssl-server">ssl-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/tiny-server">tiny-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/typical-client">typical-client</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/typical-server">typical-server</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-chat">websockets-chat</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-echo">websockets-echo</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-samples/tree/master/websockets-output">websockets-output</a>
                 </div>
             </div>
             <div class="item">
@@ -126,11 +130,9 @@
                     <a class="header item" href="../developers/project.html">Project Resources</a>
                     <a class="item" href="https://embedthis.com/blog/categories/Appweb">Appweb News</a>
                     <a class="item" href="https://embedthis.com/appweb/">Appweb Web Site</a>
-                    <a class="item" href="https://github.com/embedthis/appweb">Source Code Repository</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/issues/389">Appweb Security Alerts</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/issues">Project Issue Database</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/releases">Change Log</a>
-                    <a class="item" href="https://github.com/embedthis/appweb/milestones">Roadmap</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-gpl">Community Repository</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-gpl/issues/2">Appweb Security Alerts</a>
+                    <a class="item" href="https://github.com/embedthis/appweb-gpl/issues">Project Issue Database</a>
                     <a class="item" href="https://embedthis.com/developers/contributors.html">Contributors Agreement</a>
                 </div>
             </div>
@@ -158,7 +160,7 @@
                     <a class="item" href="https://embedthis.com/appweb/">Appweb Site</a>
                     <span class="desktop-only">
                         <a class="item" href="https://embedthis.com/blog/categories/Appweb">Appweb News</a>
-                        <a class="item" href="https://github.com/embedthis/appweb">Repository</a>
+                        <a class="item" href="https://github.com/embedthis/appweb-gpl">Repository</a>
                         <a class="item" href="https://embedthis.com/blog/">Blog</a>
                         <a class="item" href="https://twitter.com/embedthat">Twitter</a>
                     </span>
@@ -188,7 +190,9 @@
             <h1>Appweb HTTP Client</h1>
             <p>http &mdash; HTTP client program.</p><a id="synopsis"></a>
             <h2>Synopsis</h2>
-            <p>http [options] URIs ...</p><a id="description"></a>
+            <p>http [options] [file] URL</p>
+
+            <a id="description"></a>
             <h2>Description</h2>
             <p>The <b>http</b> utility uses the Appweb HTTP client library to retrieve documents from HTTP servers. It
             supports HTTP, SSL, authentication and form data and the GET, POST, PUT, DELETE, OPTIONS and TRACE HTTP
@@ -203,8 +207,16 @@
                 </thead>
                 <tbody>
                     <tr>
+                        <td>--auth Type</td>
+                        <td>Set the authentication type to "app", "basic", "digest" or "form".</td>
+                    </tr>
+                    <tr>
                         <td>--benchmark</td>
                         <td>Output timing results after retrieving URLs.</td>
+                    </tr>
+                    <tr>
+                        <td>--ca file</td>
+                        <td>Define a bundle of root certificates to use when validating a server certificate.</td>
                     </tr>
                     <tr>
                         <td>--cert file</td>
@@ -254,13 +266,13 @@
                         with the URL "/", then http will retrieve http://www.myHost.com:8888/.</td>
                     </tr>
                     <tr>
-                        <td>--insecure</td>
-                        <td>Don't validate server certificates when using SSL.</td>
-                    </tr>
-                    <tr>
                         <td>--iterations count</td>
                         <td>Retrieve the URLs iterations times. Useful for load testing. This switch can also be
                         abbreviated as -i.</td>
+                    </tr>
+                    <tr>
+                        <td>--key file</td>
+                        <td>Private key file for SSL.</td>
                     </tr>
                     <tr>
                         <td>--log logSpec</td>
@@ -290,6 +302,10 @@
                         --user.</td>
                     </tr>
                     <tr>
+                        <td>--password PASSWORD</td>
+                        <td>Password for authentication.</td>
+                    </tr>
+                    <tr>
                         <td>--post</td>
                         <td>Use POST method. Shortcut for --method POST.</td>
                     </tr>
@@ -299,8 +315,8 @@
                     </tr>
                     <tr>
                         <td class="nowrap">--protocol HTTP_VERSION</td>
-                        <td>Use the specified HTTP protocol. httpVersion should be either '0' for HTTP/1.0 or '1' for
-                        HTTP/1.1.</td>
+                        <td>Use the specified HTTP protocol. Version should be either '0' for HTTP/1.0 or '1' for
+                        HTTP/1.1. or '2' for HTTP/2</td>
                     </tr>
                     <tr>
                         <td>--put</td>
@@ -331,6 +347,10 @@
                         <td>Single step between requests by pausing for user input before proceeding.</td>
                     </tr>
                     <tr>
+                        <td>--streams count</td>
+                        <td>Number of http streams to spawn.</td>
+                    </tr>
+                    <tr>
                         <td>--threads loadThreads</td>
                         <td>Number of threads to use. Each URL will be retrieved by all threads. Useful only for load
                         testing.</td>
@@ -347,7 +367,7 @@
                         <td>Specify a user name to send with the request. If a password is not specified via
                         --password, the program will prompt for a password (which will not be echoed). The username and
                         password will be sent with the request according to the authentication protocol required by the
-                        requested web server and requested document.</td>
+                        requested web server and requested document. The username may have a password appended separated by a colon.</td>
                     </tr>
                     <tr>
                         <td>--verbose</td>
@@ -355,8 +375,20 @@
                         tracing. This switch can also be abbreviated as -v.</td>
                     </tr>
                     <tr>
+                        <td>--verify</td>
+                        <td>Validate server certificates when using SSL.</td>
+                    </tr>
+                    <tr>
+                        <td>--window size</td>
+                        <td>Set the HTTP/2 input window size. Min 65535 bytes.</td>
+                    </tr>
+                    <tr>
                         <td>--workers count</td>
                         <td>Set maximum number of worker threads.</td>
+                    </tr>
+                    <tr>
+                        <td>--zero</td>
+                        <td>Exit with zero status for any valid HTTP response. Normally exits with zero status only for HTTP status 200.</td>
                     </tr>
                 </tbody>
             </table>

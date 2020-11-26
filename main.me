@@ -21,19 +21,29 @@ Me.load({
 
     configure: {
         requires:  [ 'osdep', 'http', 'mpr', 'pcre'],
-        discovers: [ 'esp', 'mdb', 'ssl', 'watchdog' ],
-        extras:    [ 'cgi', 'dir', 'ejs', 'php' ],
+        discovers: [ 'ssl', 'watchdog', 'esp', 'mdb' ],
+        extras:    [ 'cgi', 'dir', 'ejs', 'fast', 'php', 'proxy', 'sqlite' ],
     },
 
     customize: [
-        /* 
+        /*
             The optional custom.me file is loaded after main.me is fully processed. It can
-            thus override any setting. Feel free to create and customize. 
+            thus override any setting. Feel free to create and customize.
          */
         'custom.me',
     ],
 
     settings: {
+        /*
+            Set compat to true to enable compatibility defines to assist migrating pre Appweb 8 handlers/modules
+         */
+        compat: true,
+
+        /*
+            Set to true to emit warnings about deprecated APIs
+         */
+        deprecatedWarnings: false,
+
         integrate: true,
 
         /*
@@ -46,6 +56,12 @@ Me.load({
             Name and path of the appweb config file. Defaults to './appweb.conf' if empty.
          */
         configFile: 'appweb.conf',
+
+        /*
+            Local main program code to include in appweb.c. Typically put in local.me.
+
+            localMain: '/path/main.c',
+         */
 
         /* Must build locally to build tools */
         platforms: [ 'local' ],
@@ -60,29 +76,37 @@ Me.load({
 
         esp: {
             cmd:    true,
+            name:   'appweb-esp',
             legacy: false,
             module: false,
         },
 
         http: {
-            /* Use PAM (Plugable Authentication Module) to store passwords */
+            basic: true,
+            cache: true,
             cmd: true,
+            defense: true,
+            digest: true,
+            dir: true,
+            http2: true,
             pam: true,
+            sendfile: true,
+            upload: true,
             webSockets: true,
         },
 
         mbedtls: {
-            compact: true,      /* Compact edition - Disable non-essential ciphers and features */
+            compact: true,              /* Compact edition - Disable non-essential ciphers and features */
         },
 
         openssl: {
-            version: '1.0',
+            version: '1.0',             /* Base edition */
         },
 
         mpr: {
             alloc: {
                 // quota: 204800,       /* Amount of memory to allocate before a GC */
-                // cache: 0,            /* Amount of memory to buffer for fast allocations */
+                // cache: 0,            /* Amount of memory to buffer for quick allocations */
                 // check: false,        /* Memory allocation debug and stats (slow) */
             },
             /*
@@ -94,13 +118,13 @@ Me.load({
             romMount: "/rom",           /* Virtual mount point for a rom file system */
             ssl: {
                 cache: 512,             /* Set the session cache size (items) */
-                logLevel: 5,            /* Starting logging level for SSL messages */
+                logLevel: 6,            /* Starting logging level for SSL messages */
                 handshakes: 3,          /* Set maximum number of renegotiations (zero means infinite) */
                 ticket: true,           /* Enable session resumption via ticketing - client side session caching */
                 timeout: 86400,         /* Session and ticketing duration in seconds */
             },
             threadStack: 0,             /* Use the default system stack size */
-            threadLimitByCores: true,   /* Limit threads to CPU core count */
+            threadLimitByCores: true,   /* Limit number of active threads to CPU core count */
         },
 
         /*
@@ -125,8 +149,6 @@ Me.load({
 
     usage: {
         'configFile':           'Path of the appweb.conf file',
-        'http.pam':             'Enable Unix Pluggable Auth Module (true|false)',
-        'http.webSockets':      'Enable WebSockets (true|false)',                
         'mpr.logging':          'Enable application logging (true|false)',
         'serverRoot':           'Home directory for the server ',
     },
@@ -144,6 +166,20 @@ Me.load({
             description: 'Directory Listing Module',
         },
 
+        fast: {
+            configurable: true,
+            description: 'FastCGI Module',
+            path: 'src/modules/fastHandler.c',
+            depends: [ 'libmod_fast' ],
+        },
+
+        proxy: {
+            configurable: true,
+            description: 'Proxy Module',
+            path: 'src/modules/proxyHandler.c',
+            depends: [ 'libmod_proxy' ],
+        },
+
         /*
             See src/server/server.me for the appweb targets
             See src/libappweb.me for the appweb library target
@@ -152,10 +188,10 @@ Me.load({
         projects: {
             action: `
                 if (me.settings.description == 'Embedthis Appweb Enterprise Edition') {
-                    genProjects('--set openssl.version=1.0 --with openssl', 'openssl_10', 'windows-x64')
-                    genProjects('--set openssl.version=1.1 --with openssl', 'openssl_11', 'windows-x64')
-                    genProjects('--with openssl', 'openssl', 'macosx-x64')
-                    genProjects()
+                    genProjects('--set openssl.version=1.0 --with openssl --with esp --with mdb --with cgi --with fast --with proxy', 'openssl_10', 'windows-x64')
+                    genProjects('--set openssl.version=1.1 --with openssl --with esp --with mdb --with cgi --with fast --with proxy', 'openssl_11', 'windows-x64')
+                    genProjects('--with openssl --with esp --with mdb --with cgi --with fast --with proxy', 'openssl', 'macosx-x64')
+                    genProjects('--with esp --with fast -with proxy')
                 } else {
                     genProjects('', ['default'])
                 }
@@ -167,13 +203,12 @@ Me.load({
         },
 
         mine: {
-            action: `genProjects('--with cgi', 'mine', Config.OS + '-' + Config.CPU)`,
-        }
+            action: `genProjects('--with cgi --with esp --with fast --with proxy', 'mine', Config.OS + '-' + Config.CPU)`,
+        },
+
     },
 
     usage: {
         'rom':          'Build without a file system (true|false)',
     }
 })
-
-

@@ -14,7 +14,7 @@
       </ItemDefinitionGroup>
 
       <PropertyGroup Label="Globals">
-        <ProjectGuid>{1d8ff8ca-ee04-4633-8efc-a6b9ba03dde7}</ProjectGuid>
+        <ProjectGuid>{2dfe338d-39b5-467a-af1e-5b55650ce30b}</ProjectGuid>
         <RootNamespace />
         <Keyword>Win32Proj</Keyword>
       </PropertyGroup>
@@ -139,21 +139,28 @@ cd ..\projects\appweb-windows-default</Command>
 
     <ItemGroup>
       <ProjectReference Include="libesp.vcxproj">
-      <Project>58dca591-362a-4a93-a151-7f10aaba090a</Project>
+      <Project>d1af736b-0b54-4ac3-a5d5-22585cff6641</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       </ProjectReference>
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="libhttp.vcxproj">
-      <Project>33e412db-3e03-450e-83ed-fff12aaea1bf</Project>
+      <Project>6a501010-12e5-46e1-8079-d38d770741fd</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       </ProjectReference>
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="libmpr.vcxproj">
-      <Project>271c92a3-7e25-4646-b831-8e978a600539</Project>
+      <Project>5356a451-92e5-4d34-90c4-d02bb4446f76</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      </ProjectReference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="libmpr-version.vcxproj">
+      <Project>728c46c5-5e4e-4ebb-a822-3c5932dcd642</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       </ProjectReference>
     </ItemGroup>
